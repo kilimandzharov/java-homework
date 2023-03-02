@@ -18,6 +18,7 @@ public class IntegersRepository {
      * 8.	Модифицировать конструктор IntegersRepository таким образом,
      * чтобы он загружал все числа, которые есть в файле,
      * при этом теперь числа могут следовать как через пробел, так и с новой строки
+     *
      * @param filename
      * @throws IOException
      */
@@ -48,7 +49,6 @@ public class IntegersRepository {
 
 
     /**
-     *
      * @return
      */
     public int countMaxInARow() {
@@ -57,16 +57,21 @@ public class IntegersRepository {
 
     /**
      * 6. Найти максимальное количество подряд идущих чисел в списке чисел
+     *
      * @param list
      * @return
      */
     private int maxInARow(ArrayList<Integer> list) {
         int maxInARow = 1;
+        int localMax = 1;
         for (int i = 0; i < list.size() - 1; i++) {
             if (Objects.equals(list.get(i), list.get(i + 1))) {
-                maxInARow += 1;
+                localMax += 1;
             } else {
-                maxInARow = 1;
+                if (localMax > maxInARow) {
+                    maxInARow = localMax;
+                }
+                localMax = 1;
             }
         }
         return maxInARow;
@@ -99,7 +104,7 @@ public class IntegersRepository {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-       IntegersRepository that = (IntegersRepository) o;
+        IntegersRepository that = (IntegersRepository) o;
         return Objects.equals(nums, that.nums);
     }
 

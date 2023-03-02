@@ -9,7 +9,7 @@ import java.io.IOException;
  */
 public class Program {
     public static void main(String[] args) {
-        try {
+       /* try {
             IntegersRepository repository = new IntegersRepository("input.txt");
             System.out.println(repository);
             repository.add(777);
@@ -24,6 +24,13 @@ public class Program {
             System.out.println(repository);
         } catch (IOException e){
             System.out.println(e.getMessage());
-        }
+        }*/
+        IntegersRepository repository = new IntegersRepository();
+        repository.add(111);
+        repository.add(111);
+        repository.add(111);
+        repository.add(1);
+        repository.add(1);
+        System.out.println(repository.countMaxInARow());
     }
 }
