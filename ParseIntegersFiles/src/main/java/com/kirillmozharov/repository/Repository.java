@@ -30,9 +30,6 @@ public class Repository {
 
     public void save(String filename) throws IOException {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename))) {
-            for (String line : this.strings) {
-
-            }
             for (int i = 0; i < this.strings.size(); i++) {
                 bufferedWriter.write(this.strings.get(i));
                 if (i != this.strings.size() - 1) {
