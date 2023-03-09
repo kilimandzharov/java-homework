@@ -13,14 +13,13 @@ public class Program {
            * 6.	Найти для каждого символа }, {, ], [ сколько раз он встречается в строке-поля класса,
            * вернув результат в виде HashMap<Character, Integer>
            */
-          HashMap<Character, Integer> hashMap = new HashMap();
-          hashMap.put('{',userRepository.findOccurrences("{").size());
-          hashMap.put('}',userRepository.findOccurrences("}").size());
-          hashMap.put('[',userRepository.findOccurrences("[").size());
-          hashMap.put(']',userRepository.findOccurrences("]").size());
-          System.out.println(hashMap.toString());
+
+//          System.out.println(hashMap.toString());
+          HashMap<Character, Integer> count = userRepository.count();
+          System.out.println(count);
       } catch (IOException e){
           System.out.println(e.getMessage());
       }
+
     }
 }

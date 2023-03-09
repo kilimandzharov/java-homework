@@ -10,6 +10,7 @@ public class Program {
         /**
          * Генерация файла
          */
+        //TODO вынети в конструктор репозитория
         for (int i = 0; i < 10000; i++) {
             int random = (int) (Math.random() * 1000);
             repository.add(Integer.toString(random));

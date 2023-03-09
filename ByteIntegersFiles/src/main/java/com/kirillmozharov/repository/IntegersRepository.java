@@ -24,9 +24,9 @@ public class IntegersRepository {
         try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(fileName))) {
             byte[] bytes = bufferedInputStream.readAllBytes();
             String str = new String(bytes);
-            String[] rows = str.split("\n");
+            String[] rows = str.split("\r\n");
             for (String row : rows) {
-                String nums[] = row.split(" ");
+                String[] nums = row.split(" ");
                 for (String num : nums) {
                     int result = Integer.parseInt(num);
                     this.numbers.add(result);

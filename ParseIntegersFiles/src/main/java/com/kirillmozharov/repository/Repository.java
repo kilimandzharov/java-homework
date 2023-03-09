@@ -2,12 +2,11 @@ package com.kirillmozharov.repository;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Repository {
-
-
-    private ArrayList<String> strings = new ArrayList<String>();
+    private ArrayList<Integer> integers = new ArrayList<>();
 
     public Repository() {
     }
@@ -17,22 +16,20 @@ public class Repository {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] arr = line.split(";");
-                for (String s : arr) {
-                    this.strings.add(s);
-                }
+                this.integers.addAll(Arrays.asList(arr));
             }
         }
     }
 
     public void add(String value) {
-        this.strings.add(value);
+        this.integers.add(value);
     }
 
     public void save(String filename) throws IOException {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename))) {
-            for (int i = 0; i < this.strings.size(); i++) {
-                bufferedWriter.write(this.strings.get(i));
-                if (i != this.strings.size() - 1) {
+            for (int i = 0; i < this.integers.size(); i++) {
+                bufferedWriter.write(this.integers.get(i));
+                if (i != this.integers.size() - 1) {
                     bufferedWriter.write(";");
                 }
             }
@@ -40,9 +37,9 @@ public class Repository {
     }
 
     public int findMax() {
-        int max = Integer.parseInt(this.strings.get(0));
-        for (int i = 0; i < this.strings.size(); i++) {
-            int current = Integer.parseInt(this.strings.get(i));
+        int max = Integer.parseInt(this.integers.get(0));
+        for (int i = 0; i < this.integers.size(); i++) {
+            int current = Integer.parseInt(this.integers.get(i));
             if (current > max) {
                 max = current;
             }
@@ -53,7 +50,7 @@ public class Repository {
     @Override
     public String toString() {
         return "Repository{" +
-                "strings=" + strings +
+                "strings=" + integers +
                 '}';
     }
 
@@ -62,12 +59,12 @@ public class Repository {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Repository that = (Repository) o;
-        return Objects.equals(strings, that.strings);
+        return Objects.equals(integers, that.integers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(strings);
+        return Objects.hash(integers);
     }
 }
 
