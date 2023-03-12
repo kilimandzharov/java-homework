@@ -72,7 +72,7 @@ public class UserRepository {
     @Override
     public String toString() {
         return "UserRepository{" +
-                "str='" + str + '\'' +
+                "str='" + this.arrayOfStrs + '\'' +
                 '}';
     }
 }
