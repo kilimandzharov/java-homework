@@ -1,17 +1,15 @@
 package com.kirillmozharov.repository;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserRepository {
-    private ArrayList<String> arrayOfStrs;
+    private ArrayList<String> arrayOfStrs = new ArrayList<>();
 
     public UserRepository(String urlSite) throws IOException {
         URL url = new URL(urlSite);
