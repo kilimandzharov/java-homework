@@ -11,19 +11,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserRepository {
-    private String str;
+    private ArrayList<String> arrayOfStrs;
 
     public UserRepository(String urlSite) throws IOException {
         URL url = new URL(urlSite);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-        StringBuilder stringBuilder = new StringBuilder();
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line).append("\n");
+                this.arrayOfStrs.add(line);
             }
         }
-        this.str = stringBuilder.toString();
     }
 
     /**
@@ -35,7 +33,7 @@ public class UserRepository {
      */
     public ArrayList<ArrayList<Integer>> getOccurrences(String find) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<>();
-        for (String s : this.str.split("\n")) {
+        for (String s : this.arrayOfStrs) {
             ArrayList<Integer> occurrences = new ArrayList<>();
             int ind = s.indexOf(find);
             while (ind != -1) {
@@ -56,7 +54,7 @@ public class UserRepository {
     public HashMap<Character, Integer> count() {
         HashMap<Character, Integer> hashMap = new HashMap<>();
         char[] charsToCheck = {'{', '}', '[', ']'};
-        for (String s : this.str.split("\n")) {
+        for (String s : this.arrayOfStrs) {
             for (char c : s.toCharArray()) {
                 for (char c1 : charsToCheck) {
                     if (c1 == c) {
