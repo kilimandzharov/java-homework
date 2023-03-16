@@ -36,16 +36,14 @@ public class Program {
             }
             int iterator = n == 2 ? -1 : 1;
             int counter = n == 2 ? rowLength * colLength : 1;
-            int[][] result  = new int[rowLength][colLength];
+            int[][] result = new int[rowLength][colLength];
             for (int i = 0; i < result.length; i++) {
                 for (int i1 = 0; i1 < result[i].length; i1++) {
                     result[i][i1] = counter;
-                    counter+=iterator;
+                    counter += iterator;
                 }
             }
             System.out.println(Arrays.deepToString(result));
         }
     }
-
-
 }
