@@ -21,7 +21,7 @@ public class Program {
         }
 
         for (Integer item : studentSet) {
-            if(studentSet.contains(item)){
+            if(teacherSet.contains(item)){
                result++;
             }
         }
