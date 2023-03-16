@@ -27,6 +27,6 @@ public class Program {
             }
             teamSet.add(team);
         }
-        System.out.println(spammersSet.toString());
+        System.out.println(spammersSet);
     }
 }
