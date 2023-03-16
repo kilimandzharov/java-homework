@@ -27,6 +27,7 @@ public class Program {
             studentList.add(scanner.nextInt());
         }
 
+        //TODO сделать через retainAll и взять размер
         for (Integer item : studentList) {
             if(teacherList.contains(item)){
                result++;
