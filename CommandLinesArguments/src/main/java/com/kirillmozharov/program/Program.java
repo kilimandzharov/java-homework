@@ -34,6 +34,7 @@ public class Program {
                 rowLength = t;
                 colLength = t;
             }
+            //TODO вынести в отдельный класс
             int iterator = n == 2 ? -1 : 1;
             int counter = n == 2 ? rowLength * colLength : 1;
             int[][] result = new int[rowLength][colLength];
