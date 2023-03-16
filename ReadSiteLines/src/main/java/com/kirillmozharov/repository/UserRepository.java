@@ -1,11 +1,9 @@
 package com.kirillmozharov.repository;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +15,8 @@ public class UserRepository {
         URL url = new URL(urlSite);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         StringBuilder stringBuilder = new StringBuilder();
-        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()))) {
+        try (BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(httpURLConnection.getInputStream()))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuilder.append(line).append("\n");
