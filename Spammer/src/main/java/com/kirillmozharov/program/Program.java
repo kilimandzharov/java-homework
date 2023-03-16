@@ -15,9 +15,8 @@ public class Program {
         for (String team : teams) {
             if (teamSet.contains(team)) {
                 spammersSet.add(team);
-            } else {
-                teamSet.add(team);
             }
+            teamSet.add(team);
         }
         System.out.println(spammersSet.toString());
     }
