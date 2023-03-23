@@ -36,6 +36,11 @@ public class MetroRepository {
         }
     }
 
+    /**
+     * 2. maxTraffic
+     * Реализовать метод, который возвращает станции с максимальным пассажиропотоком
+     * @return
+     */
     public ArrayList<Station> maxTraffic() {
         int maxTraffic = 0;
         ArrayList<Station> result = new ArrayList<>();
@@ -60,6 +65,11 @@ public class MetroRepository {
         return result;
     }
 
+    /**
+     * 3. sumTraffic
+     * Вычислить суммарный пассажиропоток каждой линии
+     * @return
+     */
     public HashMap<Line, Integer> sumTraffic() {
         HashMap<Line, Integer> result = new HashMap<>();
         int count = 0;
@@ -74,6 +84,10 @@ public class MetroRepository {
         return result;
     }
 
+    /**
+     * 4. sortByStationName
+     * Произвести сортировку коллекции по названию станции
+     */
     public void sortByStationName() {
         for (Map.Entry<Line, ArrayList<Station>> lineArrayListEntry : this.linesMap.entrySet()) {
             ArrayList<Station> stations = lineArrayListEntry.getValue();

@@ -64,7 +64,7 @@ public class Station {
     }
 
     public int compareTo(Station s1){
-        return s1.getName().compareTo(this.name);
+        return this.getName().compareTo(s1.name);
     }
 
     public String toCSV(){
