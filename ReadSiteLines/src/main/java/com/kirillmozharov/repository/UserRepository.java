@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserRepository {
-    private String str;
+    private ArrayList<String> linesArray;
 
     public UserRepository(String urlSite) throws IOException {
         URL url = new URL(urlSite);
@@ -19,10 +19,9 @@ public class UserRepository {
                 new InputStreamReader(httpURLConnection.getInputStream()))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                stringBuilder.append(line).append("\n");
+                linesArray.add(line);
             }
         }
-        this.str = stringBuilder.toString();
     }
 
     /**
@@ -34,7 +33,7 @@ public class UserRepository {
      */
     public ArrayList<ArrayList<Integer>> getOccurrences(String find) {
         ArrayList<ArrayList<Integer>> result = new ArrayList<>();
-        for (String s : this.str.split("\n")) {
+        for (String s : this.linesArray) {
             ArrayList<Integer> occurrences = new ArrayList<>();
             int ind = s.indexOf(find);
             while (ind != -1) {
@@ -55,7 +54,7 @@ public class UserRepository {
     public HashMap<Character, Integer> count() {
         HashMap<Character, Integer> hashMap = new HashMap<>();
         char[] charsToCheck = {'{', '}', '[', ']'};
-        for (String s : this.str.split("\n")) {
+        for (String s : this.linesArray) {
             for (char c : s.toCharArray()) {
                 for (char c1 : charsToCheck) {
                     if (c1 == c) {
@@ -73,7 +72,7 @@ public class UserRepository {
     @Override
     public String toString() {
         return "UserRepository{" +
-                "str='" + str + '\'' +
+                "str='" + linesArray + '\'' +
                 '}';
     }
 }
