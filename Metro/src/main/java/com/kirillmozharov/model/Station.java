@@ -4,17 +4,17 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Station {
-    String name;
-    int peopleCount;
-    Line line;
+    private String name;
+    private int peopleCount;
+    private Line line;
+
+    public Station() {
+    }
 
     public Station(String name, int peopleCount, Line line) {
         this.name = name;
         this.peopleCount = peopleCount;
         this.line = line;
-    }
-
-    public Station() {
     }
 
     public String getName() {
@@ -69,9 +69,7 @@ public class Station {
 
     public String toCSV(){
         StringJoiner stringJoiner = new StringJoiner(",");
-        Line line = this.line;
-        stringJoiner.add(line.getName());
-        stringJoiner.add(line.getColor());
+        stringJoiner.add(this.line.toCSV());
         stringJoiner.add(this.name);
         stringJoiner.add(Integer.toString(this.peopleCount));
         return stringJoiner.toString();
