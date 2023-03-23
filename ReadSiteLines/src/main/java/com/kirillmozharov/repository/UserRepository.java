@@ -9,12 +9,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserRepository {
-    private ArrayList<String> linesArray;
+    private ArrayList<String> linesArray = new ArrayList<>();
 
     public UserRepository(String urlSite) throws IOException {
         URL url = new URL(urlSite);
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-        StringBuilder stringBuilder = new StringBuilder();
         try (BufferedReader bufferedReader = new BufferedReader(
                 new InputStreamReader(httpURLConnection.getInputStream()))) {
             String line;
@@ -28,6 +27,7 @@ public class UserRepository {
      * 5. Через метод класса найти все вхождения заданной подстроки в поле класса, вернув их в виде
      * списка списков: в списках должны быть позиции(или пустой список) искомой подстроки в строках,
      * находящихся в поле класса. Вхождением называется позиция, где встречается строка в строке
+     *
      * @param find
      * @return
      */
@@ -49,6 +49,7 @@ public class UserRepository {
     /**
      * 6. Найти для каждого символа }, {, ], [ сколько раз он встречается в поле класса,
      * вернув результат в виде HashMap<Character, Integer>
+     *
      * @return
      */
     public HashMap<Character, Integer> count() {
@@ -58,7 +59,7 @@ public class UserRepository {
             for (char c : s.toCharArray()) {
                 for (char c1 : charsToCheck) {
                     if (c1 == c) {
-                        Integer count = hashMap.get(c) == null ? 0 : hashMap.get(c);
+                        int count = hashMap.getOrDefault(c, 0);
                         hashMap.put(c, count + 1);
                     }
                 }
@@ -66,7 +67,6 @@ public class UserRepository {
         }
         return hashMap;
     }
-
 
 
     @Override
