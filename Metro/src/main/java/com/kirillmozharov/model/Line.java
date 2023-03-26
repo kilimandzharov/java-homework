@@ -50,4 +50,9 @@ public class Line {
                 ", name='" + name + '\'' +
                 '}';
     }
+
+    public String toCSV() {
+        //TODO доделать
+        return null;
+    }
 }

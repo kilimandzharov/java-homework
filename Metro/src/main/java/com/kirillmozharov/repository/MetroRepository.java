@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.StringJoiner;
 
 public class MetroRepository {
-    HashMap<Line, ArrayList<Station>> linesMap;
+    private HashMap<Line, ArrayList<Station>> linesMap = new HashMap<>();
 
     public MetroRepository(String source) throws IOException {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(source))) {
@@ -22,16 +22,6 @@ public class MetroRepository {
                 ArrayList<Station> stationsArray = linesMap.getOrDefault(metroLine, new ArrayList<>());
                 stationsArray.add(station);
                 linesMap.put(metroLine, stationsArray);
-            }
-        }
-    }
-
-    public void save() throws IOException {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("output.txt"))) {
-            for (Map.Entry<Line, ArrayList<Station>> lineArrayListEntry : this.linesMap.entrySet()) {
-                for (Station station : lineArrayListEntry.getValue()) {
-                    bufferedWriter.write(station.toCSV());
-                }
             }
         }
     }
@@ -88,10 +78,19 @@ public class MetroRepository {
      * 4. sortByStationName
      * Произвести сортировку коллекции по названию станции
      */
-    public void sortByStationName() {
-        for (Map.Entry<Line, ArrayList<Station>> lineArrayListEntry : this.linesMap.entrySet()) {
-            ArrayList<Station> stations = lineArrayListEntry.getValue();
-            stations.sort(null);
+    public ArrayList<Station> sort() {
+        ArrayList<Station> stations = new ArrayList<>();
+        //TODO add data to list
+        stations.sort(null);
+        return stations;
+    }
+
+    public void save(String fileName) throws IOException {
+        ArrayList<Station> sort = this.sort();
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName))) {
+            for (Station station : sort) {
+                //TODO save to file
+            }
         }
     }
 }
