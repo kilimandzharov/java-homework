@@ -7,21 +7,20 @@ import java.io.*;
 import java.util.*;
 
 public class Repository {
-    HashMap<Integer, ArrayList<Employee>> employeesMap = new HashMap<>();
+    private HashMap<Integer, ArrayList<Employee>> employeesMap = new HashMap<>();
 
     public Repository(String source) throws IOException {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(source))) {
             while (bufferedReader.ready()) {
-                String line = bufferedReader.readLine();
-                String[] vals = line.split(";");
-                if (!Objects.equals(vals[0], "Фамилия")) {
-                    System.out.println(Arrays.toString(vals));
+                try {
+                    String line = bufferedReader.readLine();
+                    String[] vals = line.split(";");
                     int departmentCode = Integer.parseInt(vals[2]);
                     Employee employee = new Employee(vals[0], vals[1], departmentCode, Double.parseDouble(vals[3]));
                     ArrayList<Employee> employees = employeesMap.getOrDefault(departmentCode, new ArrayList<>());
                     employees.add(employee);
                     employeesMap.put(departmentCode, employees);
-                }
+                }  catch (RuntimeException ignored) {}
             }
         }
     }
@@ -66,15 +65,11 @@ public class Repository {
      */
     public HashMap<Integer, ArrayList<Employee>> getCoolestEmployees() {
         HashMap<Integer, ArrayList<Employee>> result = new HashMap<>();
+        //TODO тут вызвать прошлый метод
         for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : this.employeesMap.entrySet()) {
             ArrayList<Employee> employees = integerArrayListEntry.getValue();
             ArrayList<Employee> bestByDepartment = new ArrayList<>();
-            double bestScore = 0.0;
-            for (Employee employee : employees) {
-                if (employee.getRating() > bestScore) {
-                    bestScore = employee.getRating();
-                }
-            }
+            double bestScore = ;
             for (Employee employee : employees) {
                 if (employee.getRating() == bestScore) {
                     bestByDepartment.add(employee);
@@ -162,15 +157,23 @@ public class Repository {
      *
      * @return
      */
-    public Double getMaxScoresSubCoolestEmployees() {
-        ArrayList<Employee> bestOfAll = this.getCoolestEmployeesAll();
-        double max = 0.0;
-        for (Employee employee : bestOfAll) {
-            if (employee.getRating() > max) {
-                max = employee.getRating();
+    public HashMap<Integer, Double> getMaxScoresSubCoolestEmployees() {
+        /*if (employee.getRating() > secLocalMax && employee.getRating() < localMax) {
+            localMax = employee.getRating();
+        }
+        if (employee.getRating() > secGlobalMax && employee.getRating() < globalMax) {
+            secGlobalMax = globalMax;
+            globalMax = employee.getRating();
+        }*/
+
+        /*for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : this.employeesMap.entrySet()) {
+            for (Employee employee : integerArrayListEntry.getValue()) {
+                if (employee.getRating() == secGlobalMax) {
+                    subBesEmployeesAll.add(employee);
+                }
             }
         }
-        return max;
+        result.put(-1, subBesEmployeesAll);*/
     }
 
     /**
@@ -181,25 +184,10 @@ public class Repository {
      * @return
      */
     public HashMap<Integer, ArrayList<Employee>> getSubCoolestEmployees() {
-        HashMap<Integer, Double> maxScores = this.getMaxScores();
         HashMap<Integer, ArrayList<Employee>> result = new HashMap<>();
-        ArrayList<Employee> subBesEmployeesAll = new ArrayList<>();
-        double globalMax = 0;
-        double secGlobalMax = 0;
         for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : this.employeesMap.entrySet()) {
             ArrayList<Employee> subBestEmployeesByDepartment = new ArrayList<>();
-            double localMax = maxScores.get(integerArrayListEntry.getKey());
-            double secLocalMax = 0;
-            for (Employee employee : integerArrayListEntry.getValue()) {
-                if (employee.getRating() > secLocalMax && employee.getRating() < localMax) {
-                    localMax = employee.getRating();
-                }
-                if (employee.getRating() > secGlobalMax && employee.getRating() < globalMax) {
-                    secGlobalMax = globalMax;
-                    globalMax = employee.getRating();
-                }
-            }
-
+            double secLocalMax = ;
             for (Employee employee : integerArrayListEntry.getValue()) {
                 if (employee.getRating() == secLocalMax) {
                     subBestEmployeesByDepartment.add(employee);
@@ -207,15 +195,6 @@ public class Repository {
             }
             result.put(integerArrayListEntry.getKey(), subBestEmployeesByDepartment);
         }
-
-        for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : this.employeesMap.entrySet()) {
-            for (Employee employee : integerArrayListEntry.getValue()) {
-                if (employee.getRating() == secGlobalMax) {
-                    subBesEmployeesAll.add(employee);
-                }
-            }
-        }
-        result.put(-1, subBesEmployeesAll);
         return result;
     }
 
@@ -226,9 +205,9 @@ public class Repository {
      *
      * @return
      */
-    public ArrayList<Integer> getMaxCountDepartments() {
+    public HashSet<Integer> getMaxCountDepartments() {
         int maxSize = 0;
-        ArrayList<Integer> result = new ArrayList<>();
+        HashSet<Integer> result = new HashSet<>();
         for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : this.employeesMap.entrySet()) {
             int localSize = integerArrayListEntry.getValue().size();
             if (localSize > maxSize) {
@@ -242,7 +221,6 @@ public class Repository {
             }
         }
 
-        result.sort(null);
         return result;
 
     }
@@ -254,7 +232,7 @@ public class Repository {
      *
      * @return
      */
-    public ArrayList<Integer> getMinCountDepartments() {
+    public HashSet<Integer> getMinCountDepartments() {
         int minSize = Integer.MAX_VALUE;
         ArrayList<Integer> result = new ArrayList<>();
 
@@ -271,7 +249,7 @@ public class Repository {
             }
         }
         result.sort(null);
-        return result;
+        return result; //TODO без сортировки
     }
 
     /**
@@ -281,15 +259,13 @@ public class Repository {
      *
      * @return
      */
-    public ArrayList<Integer> departmentCoolestEmployees() {
+    public HashSet<Integer> departmentCoolestEmployees() {
         HashSet<Integer> departmentsWithBestSet = new HashSet<>();
         ArrayList<Employee> employees = this.getCoolestEmployeesAll();
         for (Employee employee : employees) {
             departmentsWithBestSet.add(employee.getDepartmentCode());
         }
-        ArrayList<Integer> result = new ArrayList<>(departmentsWithBestSet);
-        result.sort(null);
-        return result;
+        return departmentsWithBestSet;
     }
 
     /**
@@ -326,11 +302,8 @@ public class Repository {
                 });
                 break;
             }
-
         }
-
         return result;
-
     }
 
     /**
@@ -398,7 +371,6 @@ public class Repository {
                     return -Double.compare(o1.getValue(), o2.getValue());
                 }
                 return Integer.compare(o1.getKey(), o2.getKey());
-
             }
         });
         for (Map.Entry<Integer, Double> integerDoubleEntry : entryArrayList) {
@@ -425,7 +397,7 @@ public class Repository {
         entryArrayList.sort(new Comparator<Map.Entry<Integer, ArrayList<Employee>>>() {
             @Override
             public int compare(Map.Entry<Integer, ArrayList<Employee>> o1, Map.Entry<Integer, ArrayList<Employee>> o2) {
-                if (Integer.compare(o1.getValue().size(), o2.getValue().size()) != 0) {
+                if (o1.getValue().size() != o2.getValue().size()) {
                     return -Integer.compare(o1.getValue().size(), o2.getValue().size());
                 }
                 return Integer.compare(o1.getKey(), o2.getKey());
