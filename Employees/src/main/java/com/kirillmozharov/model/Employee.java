@@ -1,8 +1,9 @@
 package com.kirillmozharov.model;
 
 import java.util.Objects;
+import java.util.StringJoiner;
 
-public class Employee {
+public class Employee implements Comparable<Employee> {
     private String firstName;
     private String secondName;
     private double rating;
@@ -11,7 +12,7 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee( String secondName, String firstName, int departmentCode, double rating) {
+    public Employee(String secondName, String firstName, int departmentCode, double rating) {
         this.firstName = firstName;
         this.secondName = secondName;
         this.rating = rating;
@@ -50,6 +51,13 @@ public class Employee {
         this.departmentCode = departmentCode;
     }
 
+    public int compareTo(Employee e1){
+        if (!this.getSecondName().equals(e1.secondName)){
+            return this.secondName.compareTo(e1.secondName);
+        }
+        return this.firstName.compareTo(e1.firstName);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,6 +71,12 @@ public class Employee {
         return Objects.hash(firstName, secondName, rating, departmentCode);
     }
 
+    public String toCSV(){
+        StringJoiner stringJoiner = new StringJoiner(";");
+        stringJoiner.add(this.secondName).add(this.firstName)
+                .add(Integer.toString(this.departmentCode)).add(Double.toString(this.rating));
+        return stringJoiner.toString();
+    }
     @Override
     public String toString() {
         return "Employee{" +

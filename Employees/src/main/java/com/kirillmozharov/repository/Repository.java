@@ -1,29 +1,48 @@
 package com.kirillmozharov.repository;
 
 import com.kirillmozharov.model.Employee;
+import com.kirillmozharov.utils.SortType;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Repository {
-    HashMap<Integer, ArrayList<Employee>> employeesMap;
+    HashMap<Integer, ArrayList<Employee>> employeesMap = new HashMap<>();
 
     public Repository(String source) throws IOException {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(source))) {
             while (bufferedReader.ready()) {
                 String line = bufferedReader.readLine();
                 String[] vals = line.split(";");
-                int departmentCode = Integer.parseInt(vals[2]);
-                Employee employee = new Employee(vals[0], vals[1], departmentCode, Double.parseDouble(vals[3]));
-                ArrayList<Employee> employees = employeesMap.getOrDefault(departmentCode, new ArrayList<>());
-                employees.add(employee);
-                employeesMap.put(departmentCode, employees);
+                if (!Objects.equals(vals[0], "Фамилия")) {
+                    System.out.println(Arrays.toString(vals));
+                    int departmentCode = Integer.parseInt(vals[2]);
+                    Employee employee = new Employee(vals[0], vals[1], departmentCode, Double.parseDouble(vals[3]));
+                    ArrayList<Employee> employees = employeesMap.getOrDefault(departmentCode, new ArrayList<>());
+                    employees.add(employee);
+                    employeesMap.put(departmentCode, employees);
+                }
             }
         }
     }
 
+    public void save(String source, SortType sortType) throws IOException {
+        ArrayList<Employee> result = this.sort(sortType);
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(source))) {
+            bufferedWriter.write("Фамилия;Имя;номер;рейтинг");
+            for (Employee employee : result) {
+                bufferedWriter.write(employee.toCSV());
+                bufferedWriter.write("\n");
+            }
+        }
+    }
+
+    /**
+     * getMaxScores
+     * Вернуть рейтинг самых успешных сотрудников в каждом отделе
+     *
+     * @return
+     */
     public HashMap<Integer, Double> getMaxScores() {
         HashMap<Integer, Double> result = new HashMap<>();
         for (Map.Entry<Integer, ArrayList<Employee>> employeeItem : employeesMap.entrySet()) {
@@ -39,6 +58,12 @@ public class Repository {
         return result;
     }
 
+    /**
+     * getCoolestEmployees
+     * Определить самых успешных сотрудников по каждому отделу
+     *
+     * @return
+     */
     public HashMap<Integer, ArrayList<Employee>> getCoolestEmployees() {
         HashMap<Integer, ArrayList<Employee>> result = new HashMap<>();
         for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : this.employeesMap.entrySet()) {
@@ -62,8 +87,16 @@ public class Repository {
         return result;
     }
 
+    /**
+     * getAverageScores
+     * Вернуть в виде коллекции средний рейтинг сотрудников по каждому отделу
+     *
+     * @return
+     */
     public HashMap<Integer, Double> getAverageScores() {
         HashMap<Integer, Double> result = new HashMap<>();
+        double allSum = 0;
+        int allSize = 0;
         for (Map.Entry<Integer, ArrayList<Employee>> employeeItem : employeesMap.entrySet()) {
             ArrayList<Employee> employees = employeeItem.getValue();
             double sum = 0.0;
@@ -72,10 +105,19 @@ public class Repository {
             }
 
             result.put(employeeItem.getKey(), sum / employees.size());
+            allSum += sum;
+            allSize += employees.size();
         }
+        result.put(-1, allSum / allSize);
         return result;
     }
 
+    /**
+     * getCountCoolestEmployees
+     * Определить количество самых успешных сотрудников по каждому отделу
+     *
+     * @return
+     */
     public HashMap<Integer, Integer> getCountCoolestEmployees() {
         HashMap<Integer, Integer> result = new HashMap<>();
         HashMap<Integer, ArrayList<Employee>> coolestEmployees = this.getCoolestEmployees();
@@ -87,6 +129,12 @@ public class Repository {
         return result;
     }
 
+    /**
+     * getCoolestEmployeesAll
+     * Определить самых успешных сотрудников по всем отделам
+     *
+     * @return
+     */
     public ArrayList<Employee> getCoolestEmployeesAll() {
         ArrayList<Employee> result = new ArrayList<>();
         HashMap<Integer, Double> coolestScores = this.getMaxScores();
@@ -107,6 +155,13 @@ public class Repository {
         return result;
     }
 
+    /**
+     * getMaxScoresSubCoolestEmployees
+     * Определить рейтинг сотрудников, не ставших самыми успешными, но следующих сразу
+     * же после успешных по каждому отделу и по всем отделам, написав только один метод
+     *
+     * @return
+     */
     public Double getMaxScoresSubCoolestEmployees() {
         ArrayList<Employee> bestOfAll = this.getCoolestEmployeesAll();
         double max = 0.0;
@@ -118,6 +173,13 @@ public class Repository {
         return max;
     }
 
+    /**
+     * getSubCoolestEmployees
+     * Определить сотрудников, не ставших самыми успешными, но следующих
+     * сразу же после успешных по каждому отделу
+     *
+     * @return
+     */
     public HashMap<Integer, ArrayList<Employee>> getSubCoolestEmployees() {
         HashMap<Integer, Double> maxScores = this.getMaxScores();
         HashMap<Integer, ArrayList<Employee>> result = new HashMap<>();
@@ -157,6 +219,13 @@ public class Repository {
         return result;
     }
 
+    /**
+     * getMaxCountDepartments
+     * Вернуть в порядке возрастания номера департаментов,
+     * где работает больше всего сотрудников
+     *
+     * @return
+     */
     public ArrayList<Integer> getMaxCountDepartments() {
         int maxSize = 0;
         ArrayList<Integer> result = new ArrayList<>();
@@ -178,6 +247,13 @@ public class Repository {
 
     }
 
+    /**
+     * getMinCountDepartments
+     * Вернуть в порядке возрастания номера департаментов,
+     * где работает меньше всего сотрудников
+     *
+     * @return
+     */
     public ArrayList<Integer> getMinCountDepartments() {
         int minSize = Integer.MAX_VALUE;
         ArrayList<Integer> result = new ArrayList<>();
@@ -198,6 +274,13 @@ public class Repository {
         return result;
     }
 
+    /**
+     * departmentCoolestEmployees
+     * Вычислить номера департаментов в порядке возрастания, в которых есть хотя бы один сотрудник,
+     * ставший самым успешным по всем департаментам
+     *
+     * @return
+     */
     public ArrayList<Integer> departmentCoolestEmployees() {
         HashSet<Integer> departmentsWithBestSet = new HashSet<>();
         ArrayList<Employee> employees = this.getCoolestEmployeesAll();
@@ -209,4 +292,173 @@ public class Repository {
         return result;
     }
 
+    /**
+     * •	sort
+     * Отсортировать коллекцию сотрудников по фамилии, при равенстве фамилии по имени
+     * •	sort
+     * Отсортировать коллекцию сотрудников:
+     * •	По убыванию рейтинга
+     * •	При равных значениях рейтинга - по фамилии в лексикографическом порядке
+     * •	При совпадении рейтинга и фамилии - по имени в лексикографическом порядке
+     * Объединить сортировки из 12 и 13 пунктов в единый метод, используя перечисления(enums)
+     *
+     * @param flag
+     */
+    public ArrayList<Employee> sort(SortType flag) {
+        ArrayList<Employee> result = new ArrayList<>();
+        for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : this.employeesMap.entrySet()) {
+            result.addAll(integerArrayListEntry.getValue());
+        }
+        switch (flag) {
+            case BY_FULL_NAME: {
+                result.sort(null);
+                break;
+            }
+            case BY_DESC_RATING_AND_FULL_NAME: {
+                result.sort(new Comparator<Employee>() {
+                    @Override
+                    public int compare(Employee o1, Employee o2) {
+                        if (Double.compare(o1.getRating(), o2.getRating()) != 0) {
+                            return -Double.compare(o1.getRating(), o2.getRating());
+                        }
+                        return o1.compareTo(o2);
+                    }
+                });
+                break;
+            }
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * greatAverageScoreDepartments
+     * Вычислить в порядке возрастания номера департаментов, средний рейтинг сотрудников которых выше,
+     * чем средний рейтинг всех сотрудников в компании. То есть необходимо вычислить средний рейтинг для
+     * каждого департамента отдельно и средний рейтинг по всем департаментам вместе взятых.
+     * Модернизировать метод из п. 4 таким образом, чтобы он возвращал среднее не только по отделам,
+     * но и по департаментам
+     *
+     * @return
+     */
+    public HashSet<Integer> greatAverageScoreDepartments() {
+        HashMap<Integer, Double> averageScores = this.getAverageScores();
+        HashSet<Integer> result = new HashSet<>();
+        Double commonAvgRating = averageScores.get(-1);
+        for (Map.Entry<Integer, Double> integerDoubleEntry : averageScores.entrySet()) {
+            if (integerDoubleEntry.getValue() > commonAvgRating) {
+                result.add(integerDoubleEntry.getKey());
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Вычислить в порядке возрастания номера департаментов,
+     * средний рейтинг сотрудников которых максимален
+     *
+     * @return
+     */
+    public HashSet<Integer> maxAverageScoreDepartments() {
+        HashMap<Integer, Double> averageScores = this.getAverageScores();
+        HashSet<Integer> result = new HashSet<>();
+        double maxAvg = 0;
+        for (Map.Entry<Integer, Double> integerDoubleEntry : averageScores.entrySet()) {
+            if (integerDoubleEntry.getValue() > maxAvg) {
+                maxAvg = integerDoubleEntry.getKey();
+            }
+        }
+
+        for (Map.Entry<Integer, Double> integerDoubleEntry : averageScores.entrySet()) {
+            if (integerDoubleEntry.getValue() == maxAvg) {
+                result.add(integerDoubleEntry.getKey());
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * sortByAverageScores
+     * Вернуть номера департаментов в порядке убывания среднего рейтинга сотрудников,
+     * работающих в этих департаментах. Если в двух департаментах имеется одинаковый
+     * средний рейтинг сотрудников, то их номера выводятся в порядке возрастания номера департамента
+     *
+     * @return
+     */
+    public ArrayList<Integer> sortByAverageScores() {
+        ArrayList<Integer> result = new ArrayList<>();
+        ArrayList<Map.Entry<Integer, Double>> entryArrayList = new ArrayList<>(this.getAverageScores().entrySet());
+        entryArrayList.sort(new Comparator<Map.Entry<Integer, Double>>() {
+            @Override
+            public int compare(Map.Entry<Integer, Double> o1, Map.Entry<Integer, Double> o2) {
+                if (Double.compare(o1.getValue(), o2.getValue()) != 0) {
+                    return -Double.compare(o1.getValue(), o2.getValue());
+                }
+                return Integer.compare(o1.getKey(), o2.getKey());
+
+            }
+        });
+        for (Map.Entry<Integer, Double> integerDoubleEntry : entryArrayList) {
+            result.add(integerDoubleEntry.getKey());
+        }
+        Integer valueToRemove = -1;
+        result.remove(valueToRemove);
+
+        return result;
+    }
+
+    /**
+     * sortByCountEmployees
+     * Вернуть номера департаментов в порядке убывания количества сотрудников, работающих в этих департаментах.
+     * Если в двух департаментах работает одинаковое количество сотрудников, то их номера выводятся в порядке
+     * возрастания номера департамента
+     *
+     * @return
+     */
+    public ArrayList<Integer> sortByCountEmployees() {
+        ArrayList<Integer> result = new ArrayList<>();
+        ArrayList<Map.Entry<Integer, ArrayList<Employee>>> entryArrayList =
+                new ArrayList<>(this.employeesMap.entrySet());
+        entryArrayList.sort(new Comparator<Map.Entry<Integer, ArrayList<Employee>>>() {
+            @Override
+            public int compare(Map.Entry<Integer, ArrayList<Employee>> o1, Map.Entry<Integer, ArrayList<Employee>> o2) {
+                if (Integer.compare(o1.getValue().size(), o2.getValue().size()) != 0) {
+                    return -Integer.compare(o1.getValue().size(), o2.getValue().size());
+                }
+                return Integer.compare(o1.getKey(), o2.getKey());
+            }
+        });
+        for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : entryArrayList) {
+            result.add(integerArrayListEntry.getKey());
+        }
+        return result;
+    }
+
+    /**
+     * maxCountCoolestEmployeeDepartments
+     * Вернуть в порядке возрастания номера департаментов,
+     * из которых наибольшее количество сотрудников стало самыми успешными
+     *
+     * @return
+     */
+    public HashSet<Integer> maxCountCoolestEmployeeDepartments() {
+        HashSet<Integer> result = new HashSet<>();
+        int maxCoolestEmps = 0;
+        List<Map.Entry<Integer, ArrayList<Employee>>> entrySet = new ArrayList<>(this.getCoolestEmployees().entrySet());
+        for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : entrySet) {
+            if (integerArrayListEntry.getValue().size() > maxCoolestEmps) {
+                maxCoolestEmps = integerArrayListEntry.getValue().size();
+            }
+        }
+        for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : entrySet) {
+            if (integerArrayListEntry.getValue().size() == maxCoolestEmps) {
+                result.add(integerArrayListEntry.getValue().size());
+            }
+        }
+
+        return result;
+    }
 }
