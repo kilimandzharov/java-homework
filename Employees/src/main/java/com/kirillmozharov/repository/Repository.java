@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class Repository {
-    HashMap<Integer, ArrayList<Employee>> employeesMap;
+    private HashMap<Integer, ArrayList<Employee>> employeesMap = new HashMap<>();
 
     public Repository(String source) throws IOException {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(source))) {
