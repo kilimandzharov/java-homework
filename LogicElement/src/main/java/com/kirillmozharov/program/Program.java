@@ -11,7 +11,7 @@ public class Program {
         LogicElement second = new And(3);
              logicElement.fill(true,true,true,false);
              second.fill(true,true,true);
-             logicElement.union(second);
+        System.out.println(logicElement.union(second));
 
     }
 }

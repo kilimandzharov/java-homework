@@ -72,10 +72,9 @@ public abstract class LogicElement {
         }
         int newLength = this.getLength() + logicElement.getLength();
         Class resultClass = Class.forName(this.getName(this.getClass().getSimpleName()));
-        Class cls[] = new Class[]{Integer.class};
-        Constructor resultClassConstructor = resultClass.getConstructor(cls);
+        Constructor resultClassConstructor = resultClass.getConstructor(int.class);
         LogicElement result = (LogicElement) resultClassConstructor.newInstance(newLength);
-        System.out.println(result.entries.length);
+        result.fill(this.join(this.entries, logicElement.entries));
         return result;
     }
 
