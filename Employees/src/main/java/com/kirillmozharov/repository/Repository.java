@@ -20,7 +20,8 @@ public class Repository {
                     ArrayList<Employee> employees = employeesMap.getOrDefault(departmentCode, new ArrayList<>());
                     employees.add(employee);
                     employeesMap.put(departmentCode, employees);
-                }  catch (RuntimeException ignored) {}
+                } catch (RuntimeException ignored) {
+                }
             }
         }
     }
@@ -65,11 +66,11 @@ public class Repository {
      */
     public HashMap<Integer, ArrayList<Employee>> getCoolestEmployees() {
         HashMap<Integer, ArrayList<Employee>> result = new HashMap<>();
-        //TODO тут вызвать прошлый метод
+        HashMap<Integer, Double> bestScores = this.getMaxScores();
         for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : this.employeesMap.entrySet()) {
             ArrayList<Employee> employees = integerArrayListEntry.getValue();
             ArrayList<Employee> bestByDepartment = new ArrayList<>();
-            double bestScore = ;
+            double bestScore = bestScores.get(integerArrayListEntry.getKey());
             for (Employee employee : employees) {
                 if (employee.getRating() == bestScore) {
                     bestByDepartment.add(employee);
@@ -158,22 +159,33 @@ public class Repository {
      * @return
      */
     public HashMap<Integer, Double> getMaxScoresSubCoolestEmployees() {
-        /*if (employee.getRating() > secLocalMax && employee.getRating() < localMax) {
-            localMax = employee.getRating();
-        }
-        if (employee.getRating() > secGlobalMax && employee.getRating() < globalMax) {
-            secGlobalMax = globalMax;
-            globalMax = employee.getRating();
-        }*/
-
-        /*for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : this.employeesMap.entrySet()) {
-            for (Employee employee : integerArrayListEntry.getValue()) {
-                if (employee.getRating() == secGlobalMax) {
-                    subBesEmployeesAll.add(employee);
-                }
+        HashMap<Integer, Double> result = new HashMap<>();
+        HashMap<Integer, Double> bestScores = this.getMaxScores();
+        double globalMax = 0;
+        for (Map.Entry<Integer, Double> integerDoubleEntry : bestScores.entrySet()) {
+            if (integerDoubleEntry.getValue() > globalMax) {
+                globalMax = integerDoubleEntry.getValue();
             }
         }
-        result.put(-1, subBesEmployeesAll);*/
+        double secGlobalMax = 0;
+
+        for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : this.employeesMap.entrySet()) {
+            double localMax = bestScores.get(integerArrayListEntry.getKey());
+            double secLocalMax = 0;
+            for (Employee employee : integerArrayListEntry.getValue()) {
+                if (employee.getRating() > secLocalMax && employee.getRating() < localMax) {
+                    localMax = employee.getRating();
+                }
+                if (employee.getRating() > secGlobalMax && employee.getRating() < globalMax) {
+                    secGlobalMax = globalMax;
+                    globalMax = employee.getRating();
+                }
+            }
+            result.put(integerArrayListEntry.getKey(), secLocalMax);
+        }
+
+        result.put(-1, secGlobalMax);
+        return result;
     }
 
     /**
@@ -185,9 +197,10 @@ public class Repository {
      */
     public HashMap<Integer, ArrayList<Employee>> getSubCoolestEmployees() {
         HashMap<Integer, ArrayList<Employee>> result = new HashMap<>();
+        HashMap<Integer, Double> subBestScores = this.getMaxScoresSubCoolestEmployees();
         for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : this.employeesMap.entrySet()) {
             ArrayList<Employee> subBestEmployeesByDepartment = new ArrayList<>();
-            double secLocalMax = ;
+            double secLocalMax = subBestScores.get(integerArrayListEntry.getKey()) ;
             for (Employee employee : integerArrayListEntry.getValue()) {
                 if (employee.getRating() == secLocalMax) {
                     subBestEmployeesByDepartment.add(employee);
@@ -234,7 +247,7 @@ public class Repository {
      */
     public HashSet<Integer> getMinCountDepartments() {
         int minSize = Integer.MAX_VALUE;
-        ArrayList<Integer> result = new ArrayList<>();
+        HashSet<Integer> result = new HashSet<>();
 
         for (Map.Entry<Integer, ArrayList<Employee>> integerArrayListEntry : this.employeesMap.entrySet()) {
             int localSize = integerArrayListEntry.getValue().size();
@@ -248,8 +261,7 @@ public class Repository {
                 result.add(integerArrayListEntry.getKey());
             }
         }
-        result.sort(null);
-        return result; //TODO без сортировки
+        return result;
     }
 
     /**
