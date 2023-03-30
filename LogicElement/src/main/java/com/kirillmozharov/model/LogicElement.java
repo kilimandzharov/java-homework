@@ -54,24 +54,14 @@ public abstract class LogicElement {
         return c;
     }
 
-    private String getName(String name) {
-        switch (name) {
-            case "And":
-                return "com.kirillmozharov.model.And";
-            case "Or":
-                return "com.kirillmozharov.model.Or";
-            case "Xor":
-                return "com.kirillmozharov.model.Xor";
-        }
-        return "";
-    }
-
     public LogicElement union(LogicElement logicElement) throws ClassCastException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         if (this.getClass() != logicElement.getClass()) {
             throw new ClassCastException();
         }
+        String fullClassName = this.getClass().getPackageName() + "." + this.getClass().getSimpleName();
         int newLength = this.getLength() + logicElement.getLength();
-        Class resultClass = Class.forName(this.getName(this.getClass().getSimpleName()));
+        System.out.println(this.getClass().getPackageName());
+        Class resultClass = Class.forName(fullClassName);
         Constructor resultClassConstructor = resultClass.getConstructor(int.class);
         LogicElement result = (LogicElement) resultClassConstructor.newInstance(newLength);
         result.fill(this.join(this.entries, logicElement.entries));
