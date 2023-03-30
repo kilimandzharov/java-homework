@@ -31,12 +31,26 @@ public abstract class LogicElement {
         System.arraycopy(booleans, 0, this.entries, 0, booleans.length);
     }
 
+    /**
+     * Возвращает количество входов
+     * @return
+     */
     public int getLength() {
         return this.entries.length;
     }
 
+    /**
+     * Делает логическую операцию между двумя элементами
+     * @param firstArg
+     * @param secondArg
+     * @return
+     */
     protected abstract boolean operation(boolean firstArg, boolean secondArg);
 
+    /**
+     * Делает логическую операцию со всеми входами
+     * @return
+     */
     public boolean result() {
         boolean currentVal = this.operation(entries[0], entries[1]);
         for (int i = 2; i < entries.length; i++) {
@@ -45,6 +59,12 @@ public abstract class LogicElement {
         return currentVal;
     }
 
+    /**
+     * Объединяет два массива в один
+     * @param a
+     * @param b
+     * @return
+     */
     private boolean[] join(boolean[] a, boolean[] b) {
         boolean[] c = new boolean[a.length + b.length];
 
@@ -54,6 +74,17 @@ public abstract class LogicElement {
         return c;
     }
 
+    /**
+     * Объединяет два логических элемента в 1
+     * @param logicElement
+     * @return
+     * @throws ClassCastException
+     * @throws ClassNotFoundException
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws NoSuchMethodException
+     * @throws InvocationTargetException
+     */
     public LogicElement union(LogicElement logicElement) throws ClassCastException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         if (this.getClass() != logicElement.getClass()) {
             throw new ClassCastException();
