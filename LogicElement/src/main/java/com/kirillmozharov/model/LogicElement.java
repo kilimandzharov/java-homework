@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 public abstract class LogicElement {
-    boolean[] entries;
+    private boolean[] entries;
 
 
     public LogicElement(int n) {
