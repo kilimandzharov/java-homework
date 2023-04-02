@@ -45,7 +45,7 @@ public abstract class Figure {
 
     public String toCSV() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(this.getClass().toString()).append(';').append(this.a);
+        stringBuilder.append(this.getClass().getSimpleName()).append(';').append(this.a);
         return stringBuilder.toString();
     }
 }
