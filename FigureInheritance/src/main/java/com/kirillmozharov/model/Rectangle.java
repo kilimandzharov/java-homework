@@ -1,12 +1,9 @@
 package com.kirillmozharov.model;
 
 import java.util.Objects;
-import java.util.StringJoiner;
 
 public class Rectangle extends Figure {
     private double b;
-    private double c;
-    private double d;
 
     public Rectangle(double a, double b, double c, double d) {
         super(a);

@@ -79,15 +79,14 @@ public class Repository {
      */
     public ArrayList<Figure> getRectanglesWithBiggestPerimeter() {
         double maxPerOfSquares = 0;
-        List<Figure> rectangleList = this.figures.stream().filter(figure -> figure instanceof Rectangle).toList();
         for (Figure figure : rectangleList) {
-            if (figure.getPerimeter() > maxPerOfSquares) {
+            if (figure instanceof Rectangle && figure.getPerimeter() > maxPerOfSquares) {
                 maxPerOfSquares = figure.getPerimeter();
             }
         }
         ArrayList<Figure> result = new ArrayList<>();
         for (Figure figure : rectangleList) {
-            if (figure.getPerimeter() == maxPerOfSquares) {
+            if (figure instanceof Rectangle && figure.getPerimeter() == maxPerOfSquares) {
                 result.add(figure);
             }
         }

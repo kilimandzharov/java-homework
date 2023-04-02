@@ -52,26 +52,11 @@ public abstract class LogicElement {
      * @return
      */
     public boolean result() {
-        boolean currentVal = this.operation(entries[0], entries[1]);
-        for (int i = 2; i < entries.length; i++) {
+        boolean currentVal = entries[0];
+        for (int i = 1; i < entries.length; i++) {
             currentVal = this.operation(currentVal, entries[i]);
         }
         return currentVal;
-    }
-
-    /**
-     * Объединяет два массива в один
-     * @param a
-     * @param b
-     * @return
-     */
-    private boolean[] join(boolean[] a, boolean[] b) {
-        boolean[] c = new boolean[a.length + b.length];
-
-        System.arraycopy(a, 0, c, 0, a.length);
-        System.arraycopy(b, 0, c, a.length, b.length);
-
-        return c;
     }
 
     /**
@@ -85,18 +70,19 @@ public abstract class LogicElement {
      * @throws NoSuchMethodException
      * @throws InvocationTargetException
      */
-    public LogicElement union(LogicElement logicElement) throws ClassCastException, ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public LogicElement union(LogicElement logicElement){
         if (this.getClass() != logicElement.getClass()) {
-            throw new ClassCastException();
+            throw new ClassCastException("...."); //TODO message
         }
-        String fullClassName = this.getClass().getPackageName() + "." + this.getClass().getSimpleName();
-        int newLength = this.getLength() + logicElement.getLength();
-        System.out.println(this.getClass().getPackageName());
-        Class resultClass = Class.forName(fullClassName);
-        Constructor resultClassConstructor = resultClass.getConstructor(int.class);
-        LogicElement result = (LogicElement) resultClassConstructor.newInstance(newLength);
-        result.fill(this.join(this.entries, logicElement.entries));
-        return result;
+        try {
+            LogicElement result = this.getClass().getConstructor(int.class).
+                    newInstance(this.getLength() + logicElement.getLength());
+            System.arraycopy(this.entries, 0, result.entries, 0, this.entries.length);
+            System.arraycopy(b, 0, c, a.length, b.length);
+            return result;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -115,7 +101,7 @@ public abstract class LogicElement {
     @Override
     public String toString() {
         return this.getClass() + "{" +
-                "entries=" + Arrays.toString(entries) +
+                "entries=" + Arrays.toString(entries) + //TODO доделать
                 '}';
     }
 }

@@ -5,7 +5,6 @@ import com.kirillmozharov.model.Rectangle;
 import com.kirillmozharov.model.Square;
 import com.kirillmozharov.model.Triangle;
 import com.kirillmozharov.repository.Repository;
-import com.kirillmozharov.util.FigureType;
 import com.kirillmozharov.util.ParType;
 
 import java.io.IOException;

@@ -58,12 +58,11 @@ public class Triangle extends Figure {
 
     @Override
     public String toString() {
-        return super.toString().replace("}", "") + ",b=" + this.b + ",c=" + this.c + "}";
+        return super.toString().replace("}", "") + ", b=" + this.b + ", c=" + this.c + "}";
     }
 
     @Override
     public String toCSV() {
-        String otherSides = ";" + b + ";" + c;
-        return super.toCSV() + otherSides;
+        return super.toCSV() + ";" + b + ";" + c;
     }
 }
