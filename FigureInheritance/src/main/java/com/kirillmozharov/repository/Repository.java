@@ -44,7 +44,6 @@ public class Repository {
      * 6.	Написать метод, который выводит из репозитория все объекты Triangle в формате CSV
      *
      * @param name
-     * @param type
      * @throws IOException
      */
     public void saveTriangles(String name) throws IOException {
@@ -79,13 +78,13 @@ public class Repository {
      */
     public ArrayList<Figure> getRectanglesWithBiggestPerimeter() {
         double maxPerOfSquares = 0;
-        for (Figure figure : rectangleList) {
+        for (Figure figure : this.figures) {
             if (figure instanceof Rectangle && figure.getPerimeter() > maxPerOfSquares) {
                 maxPerOfSquares = figure.getPerimeter();
             }
         }
         ArrayList<Figure> result = new ArrayList<>();
-        for (Figure figure : rectangleList) {
+        for (Figure figure : this.figures) {
             if (figure instanceof Rectangle && figure.getPerimeter() == maxPerOfSquares) {
                 result.add(figure);
             }

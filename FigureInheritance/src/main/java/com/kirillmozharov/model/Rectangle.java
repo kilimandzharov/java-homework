@@ -8,8 +8,6 @@ public class Rectangle extends Figure {
     public Rectangle(double a, double b, double c, double d) {
         super(a);
         this.b = b;
-        this.c = c;
-        this.d = d;
     }
 
     public double getB() {
@@ -20,25 +18,10 @@ public class Rectangle extends Figure {
         this.b = b;
     }
 
-    public double getC() {
-        return c;
-    }
-
-    public void setC(double c) {
-        this.c = c;
-    }
-
-    public double getD() {
-        return d;
-    }
-
-    public void setD(double d) {
-        this.d = d;
-    }
 
     @Override
     public double getPerimeter() {
-        return this.getA() + this.b + this.c + this.d;
+        return this.getA() + this.b;
     }
 
     @Override
@@ -52,23 +35,23 @@ public class Rectangle extends Figure {
             return false;
         }
         Rectangle rectangle = (Rectangle) o;
-        return (this.b == rectangle.b) && (this.c == rectangle.c) && (this.d == rectangle.d);
+        return (this.b == rectangle.b);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), b, c);
+        return Objects.hash(super.hashCode(), b);
     }
 
     @Override
     public String toString() {
         return super.toString().replace("}", "") + ",b="
-                + this.b + ",c=" + this.c + ",d=" + this.d + "}";
+                + this.b + "}";
     }
 
     @Override
     public String toCSV() {
-        String otherSides = ";" + b + ";" + c + ";" + d;
+        String otherSides = ";" + b;
         return super.toCSV() + otherSides;
     }
 }
