@@ -1,10 +1,7 @@
 package com.kirillmozharov.util;
 
-<<<<<<< HEAD
 import java.util.*;
-=======
 import java.util.Comparator;
->>>>>>> 864e6bd1edc02f0268d28e275e51ef0bfca3dbd4
 
 public class GenericUtils {
     /**
