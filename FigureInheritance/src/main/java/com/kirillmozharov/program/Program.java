@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Program {
     public static void main(String[] args) throws IOException {
-        Repository repository = new Repository();
+       /* Repository repository = new Repository();
         repository.add(new Rectangle(10, 7, 10, 7));
         repository.add(new Circle(1));
         repository.add(new Circle(2));
@@ -24,7 +24,10 @@ public class Program {
             repository.saveTriangles("output.txt");
         } catch (IOException e){
             System.out.println(e.getMessage());
-        }
+        }*/
+
+        String a = "hello";
+        String b = "😄";
 
     }
 }

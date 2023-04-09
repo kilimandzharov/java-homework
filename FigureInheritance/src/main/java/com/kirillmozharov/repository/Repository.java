@@ -69,6 +69,7 @@ public class Repository {
             sumSquare += figure.getSquare();
         }
         return sumSquare;
+        "some".compareTo("hello");
     }
 
     /**
