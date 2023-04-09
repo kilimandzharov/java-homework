@@ -1,25 +1,31 @@
 package com.kirillmozharov.util;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashSet;
+import java.util.*;
 
 public class GenericUtils {
     /**
      * 2. Разработать шаблонный метод, который принимает на вход массив любого типа
      * и возвращает количество уникальных элементов в нем
+     *
      * @param arr
-     * @return
      * @param <T>
+     * @return
      */
     public static <T> int getSize(T[] arr) {
-        HashSet<T> set = new HashSet<T>(Arrays.asList(arr));
-        return set.size();
+        int count = 0;
+        List<T> list = new ArrayList<T>(Arrays.asList(arr));
+        for (T t : list) {
+            if (list.indexOf(t) == list.lastIndexOf(t)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     /**
      * 3. Разработать метод, который принимает на вход массив объектов,
      * содержащих метод сравнения compareTo, и производит сортировку данного массива методом пузырька
+     *
      * @param mass
      * @param <T>
      */
@@ -38,10 +44,11 @@ public class GenericUtils {
     /**
      * 4. Разработать метод, который принимает на вход массив объектов и объект компаратора,
      * возвращающий наибольшее значение массива
+     *
      * @param mass
      * @param comparator
-     * @return
      * @param <T>
+     * @return
      */
     public static <T> T max(T[] mass, Comparator<T> comparator) {
         T max = mass[0];
