@@ -1,6 +1,8 @@
 package com.kirillmozharov.util;
 
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
 
 public class GenericUtils {
     /**
@@ -11,7 +13,8 @@ public class GenericUtils {
      * @param <T>
      */
     public static <T> int getSize(T[] arr) {
-        return arr.length;
+        HashSet<T> set = new HashSet<T>(Arrays.asList(arr));
+        return set.size();
     }
 
     /**
