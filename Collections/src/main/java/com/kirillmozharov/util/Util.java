@@ -20,6 +20,7 @@ public class Util {
      * 1. Дан список строк, показать сколько раз каждая строка встречается в списке, далее отсортировать полученный
      * словарь по значению, вывести топ 3 часто встречающихся строк, далее собрать отсортированную коллекцию в новый
      * словарь с учетом сортировки
+     *
      * @param arg
      * @return
      */
@@ -43,9 +44,9 @@ public class Util {
             top3Strings[i] = resultList.get(resultList.size() - i - 1).getKey();
         }
 
-        LinkedHashMap<String,Integer> res = new LinkedHashMap<>();
+        LinkedHashMap<String, Integer> res = new LinkedHashMap<>();
         for (Map.Entry<String, Integer> stringIntegerEntry : resultList) {
-            res.put(stringIntegerEntry.getKey(),stringIntegerEntry.getValue());
+            res.put(stringIntegerEntry.getKey(), stringIntegerEntry.getValue());
         }
 
         return res;
@@ -54,9 +55,10 @@ public class Util {
     /**
      * 2. Дана строка, показать сколько раз каждый символ встречается в ней, далее собрать отсортированную коллекцию
      * в новый словарь с учетом сортировки
+     *
      * @return
      */
-    public static Map<Character,Integer> getCharOccurences(String arg){
+    public static Map<Character, Integer> getCharOccurences(String arg) {
         Map<Character, Integer> result = new HashMap<>();
         for (Character s : arg.toCharArray()) {
             Integer num = result.getOrDefault(s, 0);
@@ -70,10 +72,12 @@ public class Util {
             }
         };
         resultList.sort(comparator);
-        LinkedHashMap<Character,Integer> res = new LinkedHashMap<>();
+        LinkedHashMap<Character, Integer> res = new LinkedHashMap<>();
         for (Map.Entry<Character, Integer> stringIntegerEntry : resultList) {
-            res.put(stringIntegerEntry.getKey(),stringIntegerEntry.getValue());
+            res.put(stringIntegerEntry.getKey(), stringIntegerEntry.getValue());
         }
         return res;
     }
+
+
 }

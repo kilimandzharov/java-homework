@@ -1,2 +1,5 @@
-package com.kirillmozharov.utils;public class Util {
+package com.kirillmozharov.utils;
+
+public class Util {
+
 }
