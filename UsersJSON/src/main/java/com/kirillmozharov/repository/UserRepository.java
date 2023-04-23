@@ -29,6 +29,12 @@ public class UserRepository {
         });
     }
 
+    /**
+     * 5.	В репозитории пользователей написать метод,
+     * который принимает на вход id и возвращает объекта пользователя, соответствующий переданному id
+     * @param id
+     * @return
+     */
     public Optional<User> findUserById(int id) {
         for (User user : this.users) {
             if (user.getId() == id) {
