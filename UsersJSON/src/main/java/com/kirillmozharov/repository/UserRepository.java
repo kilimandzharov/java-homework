@@ -15,18 +15,15 @@ import java.util.Optional;
 
 public class UserRepository {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private List<User> users = new ArrayList<>();
+    private List<User> users;
 
     public UserRepository(String urlSite) throws IOException {
         URL url = new URL(urlSite);
-        String json = "";
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         try (BufferedInputStream bufferedInputStream = new BufferedInputStream(httpURLConnection.getInputStream())) {
-            byte[] bytes = bufferedInputStream.readAllBytes();
-            json = new String(bytes);
+            this.users = objectMapper.readValue(bufferedInputStream, new TypeReference<>() {
+            });
         }
-        this.users = objectMapper.readValue(json, new TypeReference<List<User>>() {
-        });
     }
 
     /**
@@ -46,10 +43,6 @@ public class UserRepository {
 
     public List<User> getUsers() {
         return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
     @Override
