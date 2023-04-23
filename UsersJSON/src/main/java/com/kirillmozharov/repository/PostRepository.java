@@ -35,6 +35,14 @@ public class PostRepository {
         this.posts = posts;
     }
 
+    /**
+     * 6. В PostRepository написать метод, который принимает на вход UserRepository
+     * и возвращает HashMap<User, ArrayList<Post>>, показывая, какому пользователю соответствуют какие посты.
+     * Для определения автора поста в объекте Post имеется поле userId, соответствующее полю id из класса User. При тестировании данного метода вывести на экран словарь в следующем порядке:
+     * userId: все id постов этого user
+     * @param userRepository
+     * @return
+     */
     public Map<User, List<Post>> getUserAndHisPosts(UserRepository userRepository) {
         Map<User, List<Post>> result = new HashMap<>();
         for (Post post : this.posts) {
