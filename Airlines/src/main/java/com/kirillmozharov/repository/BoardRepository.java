@@ -1,2 +1,4 @@
-package com.kirillmozharov.repository;public class BoardRepository {
+package com.kirillmozharov.repository;
+
+public class BoardRepository {
 }

@@ -18,7 +18,7 @@ public class Program {
         }*/
         try {
             FlightRepository flightRepository = new FlightRepository("flies.json");
-            LocalDate localDate = LocalDate.of(2018,2,17);
+            LocalDate localDate = LocalDate.of(2009,2,17);
             System.out.println(flightRepository.getPassengersDepartedLaterThan(localDate));
         } catch (IOException ignored) {
             System.out.println(ignored);

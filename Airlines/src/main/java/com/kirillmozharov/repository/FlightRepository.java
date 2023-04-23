@@ -17,9 +17,9 @@ public class FlightRepository {
     private FrequentFlyer frequentFlyers;
 
     {
-        //TODO для работы с LocalDateTime
         this.objectMapper.registerModule(new JavaTimeModule());
     }
+
     public FlightRepository(String path) throws IOException {
         try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(path))) {
             this.frequentFlyers = objectMapper.readValue(bufferedInputStream, FrequentFlyer.class);
@@ -34,6 +34,11 @@ public class FlightRepository {
         this.frequentFlyers = frequentFlyers;
     }
 
+    /**
+     * 7. Найти всех пассажиров, которые вылетали из указанного города, передав его как параметр метода
+     * @param cityName
+     * @return
+     */
     public Set<ForumProfile> getPassengersByCityDeparture(String cityName) {
         Set<ForumProfile> result = new HashSet<>();
         for (ForumProfile forumProfile : this.frequentFlyers.getForumProfiles()) {
@@ -46,6 +51,11 @@ public class FlightRepository {
         return result;
     }
 
+    /**
+     * 8. Найти всех пассажиров, которые вылетали позднее указанной даты, передав ее как параметр метода
+     * @param localDate
+     * @return
+     */
     public Set<ForumProfile> getPassengersDepartedLaterThan(LocalDate localDate) {
         Set<ForumProfile> result = new HashSet<>();
         for (ForumProfile forumProfile : this.frequentFlyers.getForumProfiles()) {
