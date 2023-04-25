@@ -2,9 +2,9 @@ package com.kirillmozharov.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.kirillmozharov.example.ForumProfile;
-import com.kirillmozharov.example.FrequentFlyer;
-import com.kirillmozharov.example.RegisteredFlight;
+import com.kirillmozharov.model.ForumProfile;
+import com.kirillmozharov.model.FrequentFlyer;
+import com.kirillmozharov.model.RegisteredFlight;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -28,10 +28,6 @@ public class FlightRepository {
 
     public FrequentFlyer getFrequentFlyers() {
         return frequentFlyers;
-    }
-
-    public void setFrequentFlyers(FrequentFlyer frequentFlyers) {
-        this.frequentFlyers = frequentFlyers;
     }
 
     /**

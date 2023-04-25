@@ -1,5 +1,5 @@
 
-package com.kirillmozharov.example;
+package com.kirillmozharov.model;
 
 import java.util.ArrayList;
 import java.util.List;

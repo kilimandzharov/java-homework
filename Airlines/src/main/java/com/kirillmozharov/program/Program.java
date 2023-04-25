@@ -1,8 +1,6 @@
 package com.kirillmozharov.program;
 
-import com.kirillmozharov.example.ForumProfile;
 import com.kirillmozharov.repository.FlightRepository;
-import com.kirillmozharov.util.Json2PojoGenerator;
 
 import java.io.IOException;
 import java.time.LocalDate;
