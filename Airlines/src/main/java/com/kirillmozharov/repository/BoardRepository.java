@@ -41,7 +41,6 @@ public class BoardRepository {
                     System.out.println(ignored.getMessage());
                 }
             }
-            System.out.println(this.passengers);
         } catch (IOException ignored) {
         }
     }
