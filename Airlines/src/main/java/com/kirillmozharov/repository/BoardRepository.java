@@ -37,12 +37,11 @@ public class BoardRepository {
                             csv[5], csv[6], csv[7], csv[8], LocalDate.parse(csv[9], flightDateFormatter),
                             LocalTime.parse(csv[10], timeFormatter), csv[10], csv[11], csv[12]));
                     System.out.println(line);
-                } catch (DateTimeParseException ignored) {
-                    System.out.println(ignored.getMessage());
+                } catch (DateTimeParseException e) {
+                    System.out.println(e.getMessage());
                 }
             }
-        } catch (IOException ignored) {
-        }
+        } catch (IOException ignored) {}
     }
 
     public void save(String fileName) throws IOException {
