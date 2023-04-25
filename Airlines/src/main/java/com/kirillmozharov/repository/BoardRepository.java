@@ -36,7 +36,6 @@ public class BoardRepository {
                     this.passengers.add(new Passenger(csv[0], csv[1], csv[2], csv[3], LocalDate.parse(csv[4], birthDateFormatter),
                             csv[5], csv[6], csv[7], csv[8], LocalDate.parse(csv[9], flightDateFormatter),
                             LocalTime.parse(csv[10], timeFormatter), csv[10], csv[11], csv[12]));
-                    System.out.println(line);
                 } catch (DateTimeParseException e) {
                     System.out.println(e.getMessage());
                 }
