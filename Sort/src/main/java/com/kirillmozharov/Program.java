@@ -81,7 +81,7 @@ public class Program {
          Даны N натуральных чисел. Упорядочите их в порядке возрастания последней цифры числа,
          а при равенстве последней цифры — по возрастанию самих чисел. Упорядоченные числа выведите через пробел.
          */
-      /*  ArrayList<Integer> result = new ArrayList<>();
+       /* ArrayList<Integer> result = new ArrayList<>();
         int n = scanner.nextInt();
         for (int i = 0; i < n; i++) {
             int value = scanner.nextInt();

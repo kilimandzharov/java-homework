@@ -13,26 +13,18 @@ import java.util.*;
 
 public class PostRepository {
     private ObjectMapper objectMapper = new ObjectMapper();
-    private List<Post> posts = new ArrayList<>();
+    private List<Post> posts;
 
     public PostRepository(String urlSite) throws IOException {
         URL url = new URL(urlSite);
-        String json = "";
         HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
         try (BufferedInputStream bufferedInputStream = new BufferedInputStream(httpURLConnection.getInputStream())) {
-            byte[] bytes = bufferedInputStream.readAllBytes();
-            json = new String(bytes);
+            this.posts = objectMapper.readValue(bufferedInputStream, new TypeReference<>() {});
         }
-        this.posts = objectMapper.readValue(json, new TypeReference<List<Post>>() {
-        });
     }
 
     public List<Post> getPosts() {
         return posts;
-    }
-
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
     }
 
     /**
