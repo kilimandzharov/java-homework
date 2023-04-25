@@ -2,18 +2,14 @@ package com.kirillmozharov.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.kirillmozharov.example.Arrival;
 import com.kirillmozharov.model.Passenger;
 
 import java.io.*;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.Objects;
 
 public class BoardRepository {
