@@ -1,6 +1,7 @@
 package com.kirillmozharov.program;
 
 import com.kirillmozharov.example.ForumProfile;
+import com.kirillmozharov.repository.BoardRepository;
 import com.kirillmozharov.repository.FlightRepository;
 import com.kirillmozharov.util.Json2PojoGenerator;
 
@@ -16,13 +17,24 @@ public class Program {
             generator.generate("FrequentFlyer", "com.kirillmozharov.example");
         } catch (IOException ignored) {
         }*/
-        try {
+       /* try {
             FlightRepository flightRepository = new FlightRepository("flies.json");
             LocalDate localDate = LocalDate.of(2009,2,17);
             System.out.println(flightRepository.getPassengersDepartedLaterThan(localDate));
         } catch (IOException ignored) {
             System.out.println(ignored);
+        }*/
+
+        try {
+            BoardRepository boardRepository = new BoardRepository("BoardingData.csv");
+            boardRepository.save("result.json");
+        } catch (IOException e){
+
         }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
 
     }
 }
