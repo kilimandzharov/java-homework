@@ -1,6 +1,5 @@
 package com.kirillmozharov.program;
 
-import com.kirillmozharov.example.ForumProfile;
 import com.kirillmozharov.repository.BoardRepository;
 import com.kirillmozharov.repository.FlightRepository;
 import com.kirillmozharov.util.Json2PojoGenerator;
