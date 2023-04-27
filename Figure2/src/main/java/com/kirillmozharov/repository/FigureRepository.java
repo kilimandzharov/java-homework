@@ -115,7 +115,6 @@ public class FigureRepository {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println(figures);
         int figureToReplaceIndex = -1;
         for (Figure figure : figures) {
             if (figure.equals(figureToReplace)) {
@@ -125,7 +124,6 @@ public class FigureRepository {
 
         if (figureToReplaceIndex != -1) {
             figures.set(figureToReplaceIndex, figureToReplaceWith);
-            System.out.println(figures);
             this.saveFigures("replace-result.csv", figures);
         }
     }
