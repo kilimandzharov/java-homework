@@ -7,6 +7,7 @@ import com.kirillmozharov.util.Json2PojoGenerator;
 import java.io.IOException;
 import java.time.LocalDate;
 
+//TODO сделать equels / hashCode
 public class Program {
     public static void main(String[] args) {
      /*   try {
@@ -33,7 +34,5 @@ public class Program {
         catch (Exception e){
             System.out.println(e.getMessage());
         }
-
-
     }
 }
