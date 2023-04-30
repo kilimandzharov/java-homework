@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -102,4 +103,27 @@ public class RegisteredFlight {
         this.departure = departure;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RegisteredFlight that = (RegisteredFlight) o;
+        return codeshare == that.codeshare && Objects.equals(date, that.date) && Objects.equals(arrival, that.arrival) && Objects.equals(flight, that.flight) && Objects.equals(departure, that.departure);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(date, codeshare, arrival, flight, departure);
+    }
+
+    @Override
+    public String toString() {
+        return "RegisteredFlight{" +
+                "date=" + date +
+                ", codeshare=" + codeshare +
+                ", arrival=" + arrival +
+                ", flight='" + flight + '\'' +
+                ", departure=" + departure +
+                '}';
+    }
 }

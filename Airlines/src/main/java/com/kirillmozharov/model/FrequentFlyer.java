@@ -3,6 +3,8 @@ package com.kirillmozharov.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -42,4 +44,23 @@ public class FrequentFlyer {
         this.forumProfiles = forumProfiles;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FrequentFlyer that = (FrequentFlyer) o;
+        return Objects.equals(forumProfiles, that.forumProfiles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(forumProfiles);
+    }
+
+    @Override
+    public String toString() {
+        return "FrequentFlyer{" +
+                "forumProfiles=" + forumProfiles +
+                '}';
+    }
 }
