@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+
+//TODO Убрать фабрикии / методы в репозитории сделать статическими
 public class Program {
     public static void main(String[] args) {
       /*  Rectangle rectangle = new Rectangle(1, 2);

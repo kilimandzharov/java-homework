@@ -7,6 +7,7 @@ import com.kirillmozharov.model.FrequentFlyer;
 import com.kirillmozharov.model.RegisteredFlight;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -21,9 +22,7 @@ public class FlightRepository {
     }
 
     public FlightRepository(String path) throws IOException {
-        try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(path))) {
-            this.frequentFlyers = objectMapper.readValue(bufferedInputStream, FrequentFlyer.class);
-        }
+        this.frequentFlyers = objectMapper.readValue(new File(path), FrequentFlyer.class);
     }
 
     public FrequentFlyer getFrequentFlyers() {
