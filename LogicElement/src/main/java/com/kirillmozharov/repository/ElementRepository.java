@@ -1,6 +1,6 @@
 package com.kirillmozharov.repository;
 
-import com.kirillmozharov.model.AbstractElementFactory;
+import com.kirillmozharov.factory.AbstractElementFactory;
 import com.kirillmozharov.model.LogicElement;
 import com.kirillmozharov.model.SimpleElementFactory;
 import com.kirillmozharov.util.ElementEnum;

@@ -102,7 +102,7 @@ public class FigureRepository {
      * @param figureToReplace
      * @param figureToReplaceWith
      */
-    public void replaceFigures(String fileName, Figure figureToReplace, Figure figureToReplaceWith) {
+    public void replaceFigures(String fileName, Figure figureToReplace, Figure figureToReplaceWith) throws IOException {
         ArrayList<String> figureStrings = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -112,23 +112,18 @@ public class FigureRepository {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        int figureToReplaceIndex = -1;
-        for (String figureString : figureStrings) {
-            if (figureString.equals(figureToReplace.toCsv())) {
-                figureToReplaceIndex = figureStrings.indexOf(figureToReplace.toCsv());
-            }
-        }
+        int figureToReplaceIndex = figureStrings.indexOf(figureToReplace.toCsv());
 
         if (figureToReplaceIndex != -1) {
             figureStrings.set(figureToReplaceIndex, figureToReplaceWith.toCsv());
-            ArrayList<Figure> figures = new ArrayList<>();
-            for (String figureString : figureStrings) {
-                String[] vals = figureString.split(";");
-                Figure figure = FigureSimpleFactory.getInstance(vals[0], Arrays.copyOfRange(vals, 1, vals.length));
-                figures.add(figure);
+            try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName))) {
+                for (String figureString : figureStrings) {
+                    bufferedWriter.write(figureString);
+                    bufferedWriter.newLine();
+                }
             }
-            this.saveFigures("replace-result.csv", figures);
         }
     }
-
 }
+
+//Кирилл Зайди в скайп
