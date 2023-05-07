@@ -2,7 +2,7 @@ package com.kirillmozharov.repository;
 
 import com.kirillmozharov.model.Calculator;
 import com.kirillmozharov.model.Figure;
-import com.kirillmozharov.model.FigureFactory;
+import com.kirillmozharov.model.FigureSimpleFactory;
 import com.kirillmozharov.util.Functor;
 
 import java.io.*;
@@ -19,6 +19,7 @@ public class FigureRepository {
     /**
      * 1.	В классе Repository реализовать метод, принимающий на вход заполненное с клавиатуры множество различных
      * фигур, экземпляр перечисления и вычисляющий фигуру с максимальным значением переданного перечисления
+     *
      * @param functor
      * @param figuresFromKeyBoard
      * @return
@@ -38,6 +39,7 @@ public class FigureRepository {
     /**
      * 2.	Реализовать метод, вычисляющий две наиболее удаленные друг от друга фигуры по переданному
      * признаку-перечислению
+     *
      * @param functor
      * @param figuresFromKeyBoard
      * @return
@@ -75,6 +77,7 @@ public class FigureRepository {
      * 1. В классе Repository реализовать метод, принимающий на вход имя текстового файла и множество
      * различных фигур и выполняющий сохранение данного множества в файл figures.csv в следующем формате:
      * название_фигуры;параметры_фигуры_через «;»;площадь;периметр
+     *
      * @param fileName
      * @param figuresToSave
      */
@@ -94,36 +97,36 @@ public class FigureRepository {
      * 2.	Реализовать метод, который принимает на вход имя файла, где сохранено множество различных фигур,
      * объект фигуры, который необходимо заменить в файле и объект фигуры на которую требуется произвести замену.
      * Выполняет замену одной фигуры в файле на другую, используя рациональные алгоритмы решения
+     *
      * @param fileName
      * @param figureToReplace
      * @param figureToReplaceWith
-     * @param figureFactoryMap
      */
-    public void replaceFigures(String fileName, Figure figureToReplace, Figure figureToReplaceWith, Map<String,
-            FigureFactory> figureFactoryMap) {
-        List<Figure> figures = new ArrayList<>();
+    public void replaceFigures(String fileName, Figure figureToReplace, Figure figureToReplaceWith) {
+        ArrayList<String> figureStrings = new ArrayList<>();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                String[] vals = line.split(";");
-                String figureName = vals[0];
-                FigureFactory figureFactory = figureFactoryMap.get(figureName);
-                Figure figure = figureFactory.newInstance(Double.parseDouble(vals[1]), Double.parseDouble(vals[2]),
-                        Arrays.copyOfRange(vals, 3, vals.length));
-                figures.add(figure);
+                figureStrings.add(line);
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
         int figureToReplaceIndex = -1;
-        for (Figure figure : figures) {
-            if (figure.equals(figureToReplace)) {
-                figureToReplaceIndex = figures.indexOf(figureToReplace);
+        for (String figureString : figureStrings) {
+            if (figureString.equals(figureToReplace.toCsv())) {
+                figureToReplaceIndex = figureStrings.indexOf(figureToReplace.toCsv());
             }
         }
 
         if (figureToReplaceIndex != -1) {
-            figures.set(figureToReplaceIndex, figureToReplaceWith);
+            figureStrings.set(figureToReplaceIndex, figureToReplaceWith.toCsv());
+            ArrayList<Figure> figures = new ArrayList<>();
+            for (String figureString : figureStrings) {
+                String[] vals = figureString.split(";");
+                Figure figure = FigureSimpleFactory.getInstance(vals[0], Arrays.copyOfRange(vals, 1, vals.length));
+                figures.add(figure);
+            }
             this.saveFigures("replace-result.csv", figures);
         }
     }
