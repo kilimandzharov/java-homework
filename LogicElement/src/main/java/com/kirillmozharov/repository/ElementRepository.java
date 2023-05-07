@@ -2,7 +2,7 @@ package com.kirillmozharov.repository;
 
 import com.kirillmozharov.factory.AbstractElementFactory;
 import com.kirillmozharov.model.LogicElement;
-import com.kirillmozharov.model.SimpleElementFactory;
+import com.kirillmozharov.factory.SimpleElementFactory;
 import com.kirillmozharov.util.ElementEnum;
 
 import java.io.BufferedReader;
@@ -23,17 +23,16 @@ public class ElementRepository {
      * функционал ранее. При реализации пользоваться аргументом-словарем фабрик
      * @param filename
      */
-    public ElementRepository(String filename) {
+    public ElementRepository(String filename) throws IOException {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                String[] vals = line.split(";");
-                LogicElement logicElement = SimpleElementFactory.getInstance(ElementEnum.valueOf(vals[0]), vals.length - 1);
-                this.fillAndAdd(logicElement, Arrays.copyOfRange(vals, 1, vals.length));
+                try {
+                    String[] vals = line.split(";");
+                    LogicElement logicElement = SimpleElementFactory.getInstance(ElementEnum.valueOf(vals[0]), vals.length - 1);
+                    this.fillAndAdd(logicElement, Arrays.copyOfRange(vals, 1, vals.length));
+                } catch (RuntimeException ignored) {}
             }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -44,7 +43,7 @@ public class ElementRepository {
      * @param filename
      * @param factoryMap
      */
-    public ElementRepository(String filename, Map<ElementEnum, AbstractElementFactory> factoryMap) {
+    public ElementRepository(String filename, Map<ElementEnum, AbstractElementFactory> factoryMap) throws IOException {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -52,9 +51,6 @@ public class ElementRepository {
                 LogicElement logicElement = factoryMap.get(ElementEnum.valueOf(vals[0])).getInstance(vals.length - 1);
                 this.fillAndAdd(logicElement, Arrays.copyOfRange(vals, 1, vals.length));
             }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } catch (IllegalArgumentException ignored) {
         }
     }
 
