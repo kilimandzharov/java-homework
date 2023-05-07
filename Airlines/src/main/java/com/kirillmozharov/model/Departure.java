@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.Objects;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "City",
@@ -70,4 +72,25 @@ public class Departure {
         this.country = country;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Departure departure = (Departure) o;
+        return Objects.equals(city, departure.city) && Objects.equals(airport, departure.airport) && Objects.equals(country, departure.country);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(city, airport, country);
+    }
+
+    @Override
+    public String toString() {
+        return "Departure{" +
+                "city='" + city + '\'' +
+                ", airport='" + airport + '\'' +
+                ", country='" + country + '\'' +
+                '}';
+    }
 }

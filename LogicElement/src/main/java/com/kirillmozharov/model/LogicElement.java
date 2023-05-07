@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
-public abstract class LogicElement {
+public abstract class LogicElement implements Comparable<LogicElement> {
     private boolean[] entries;
 
 
@@ -33,6 +33,7 @@ public abstract class LogicElement {
 
     /**
      * Возвращает количество входов
+     *
      * @return
      */
     public int getLength() {
@@ -41,6 +42,7 @@ public abstract class LogicElement {
 
     /**
      * Делает логическую операцию между двумя элементами
+     *
      * @param firstArg
      * @param secondArg
      * @return
@@ -49,6 +51,7 @@ public abstract class LogicElement {
 
     /**
      * Делает логическую операцию со всеми входами
+     *
      * @return
      */
     public boolean result() {
@@ -61,6 +64,7 @@ public abstract class LogicElement {
 
     /**
      * Объединяет два логических элемента в 1
+     *
      * @param logicElement
      * @return
      * @throws ClassCastException
@@ -70,15 +74,14 @@ public abstract class LogicElement {
      * @throws NoSuchMethodException
      * @throws InvocationTargetException
      */
-    public LogicElement union(LogicElement logicElement){
+    public LogicElement union(LogicElement logicElement) {
         if (this.getClass() != logicElement.getClass()) {
-            throw new ClassCastException("...."); //TODO message
+            throw new ClassCastException("Classes doesnt match"); //TODO message
         }
         try {
             LogicElement result = this.getClass().getConstructor(int.class).
                     newInstance(this.getLength() + logicElement.getLength());
             System.arraycopy(this.entries, 0, result.entries, 0, this.entries.length);
-            System.arraycopy(b, 0, c, a.length, b.length);
             return result;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -103,5 +106,10 @@ public abstract class LogicElement {
         return this.getClass() + "{" +
                 "entries=" + Arrays.toString(entries) + //TODO доделать
                 '}';
+    }
+
+    @Override
+    public int compareTo(LogicElement o) {
+        return Integer.compare(this.entries.length, o.entries.length);
     }
 }

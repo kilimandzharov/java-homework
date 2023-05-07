@@ -3,6 +3,8 @@ package com.kirillmozharov.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -117,4 +119,28 @@ public class ForumProfile {
         this.realName = realName;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ForumProfile that = (ForumProfile) o;
+        return Objects.equals(registeredFlights, that.registeredFlights) && Objects.equals(nickName, that.nickName) && Objects.equals(travelDocuments, that.travelDocuments) && Objects.equals(sex, that.sex) && Objects.equals(loyalityProgramm, that.loyalityProgramm) && Objects.equals(realName, that.realName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(registeredFlights, nickName, travelDocuments, sex, loyalityProgramm, realName);
+    }
+
+    @Override
+    public String toString() {
+        return "ForumProfile{" +
+                "registeredFlights=" + registeredFlights +
+                ", nickName='" + nickName + '\'' +
+                ", travelDocuments=" + travelDocuments +
+                ", sex='" + sex + '\'' +
+                ", loyalityProgramm=" + loyalityProgramm +
+                ", realName=" + realName +
+                '}';
+    }
 }

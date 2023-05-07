@@ -2,12 +2,6 @@ package com.kirillmozharov.program;
 
 import com.kirillmozharov.model.*;
 import com.kirillmozharov.repository.FigureRepository;
-import com.kirillmozharov.util.Functor;
-import com.kirillmozharov.model.TriangleFactory;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 
 
 //TODO Убрать фабрикии / методы в репозитории сделать статическими
@@ -64,9 +58,6 @@ public class Program {
         System.out.println(calculator3.calculate(Functor.PERIMETER));*/
         Rectangle rectangle = new Rectangle(1, 2);
         FigureRepository figureRepository = new FigureRepository();
-        Map<String, FigureFactory> figureFactoryMap = new HashMap<>();
-        figureFactoryMap.put("Triangle", new TriangleFactory());
-        figureFactoryMap.put("Rectangle", new RectangleFactory());
-        figureRepository.replaceFigures("replace.csv", rectangle, new Triangle(10, 10, 15), figureFactoryMap);
+        figureRepository.replaceFigures("replace.csv", rectangle, new Triangle(10, 10, 15));
     }
 }
