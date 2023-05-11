@@ -3,6 +3,8 @@ package com.kirillmozharov.program;
 import com.kirillmozharov.model.*;
 import com.kirillmozharov.repository.FigureRepository;
 
+
+//TODO Убрать фабрикии / методы в репозитории сделать статическими
 public class Program {
     public static void main(String[] args) {
       /*  Rectangle rectangle = new Rectangle(1, 2);

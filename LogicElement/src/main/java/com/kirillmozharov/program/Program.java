@@ -1,6 +1,9 @@
 package com.kirillmozharov.program;
 
-import com.kirillmozharov.model.*;
+import com.kirillmozharov.factory.AbstractElementFactory;
+import com.kirillmozharov.factory.AndElementFactory;
+import com.kirillmozharov.factory.OrElementFactory;
+import com.kirillmozharov.factory.XorElementFactory;
 import com.kirillmozharov.repository.ElementRepository;
 import com.kirillmozharov.util.ElementEnum;
 

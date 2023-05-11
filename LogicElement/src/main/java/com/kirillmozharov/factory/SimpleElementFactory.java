@@ -1,5 +1,9 @@
-package com.kirillmozharov.model;
+package com.kirillmozharov.factory;
 
+import com.kirillmozharov.model.And;
+import com.kirillmozharov.model.LogicElement;
+import com.kirillmozharov.model.Or;
+import com.kirillmozharov.model.Xor;
 import com.kirillmozharov.util.ElementEnum;
 
 public class SimpleElementFactory {
