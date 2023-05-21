@@ -13,7 +13,7 @@ public class Util {
                 count++;
             }
         }
-        T[] result = (T[]) Array.newInstance(arr[0].getClass(), count);
+        T[] result = (T[]) Array.newInstance(arr.getClass().getComponentType(), count);
         int index = 0;
         for (T t : arr) {
             if (tFilter.apply(t)) {

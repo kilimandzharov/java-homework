@@ -7,7 +7,20 @@ import java.util.*;
 
 public class Program {
     public static void main(String[] args) {
-        try{
+        try {
+            /**
+             * 	Всех объектов, которые заполнены по умолчанию
+             */
+            Object[] notDefaultObjects = new Object[]{new HashMap<>(10, 2),
+                    new ArrayList<>(), new ArrayList<>(10), new Bug(1)};
+
+            Filter<Object> objectFilter = o -> {
+                Class objectClass = o.getClass();
+                Object o1 = objectClass.newInstance();
+                return !o1.equals(o);
+            };
+
+            System.out.println("Не дефолтные объекты" + Arrays.toString(Util.filter(notDefaultObjects, objectFilter)));
             Scanner scanner = new Scanner(System.in);
             Integer[] testArr = new Integer[]{1, 2, -44, 12, 33, -44, 11};
             int fromKeyboard = scanner.nextInt();
@@ -75,29 +88,16 @@ public class Program {
             Object[] objects = new Object[]{null, null, new HashMap<>(), new ArrayList<>()};
             System.out.println(Arrays.toString(Util.filter(objects, Objects::nonNull)));
 
-
-            /**
-             * 	Всех объектов, которые заполнены по умолчанию
-             */
-            Object[] notDefaultObjects = new Object[]{new HashMap<>(10, 2), new ArrayList<>(), new ArrayList<>(10)};
-
-            Filter<Object> objectFilter = o -> {
-                Class objectClass = o.getClass();
-                Object o1 = objectClass.newInstance();
-                return !o1.equals(o);
-            };
-
-            System.out.println(Arrays.toString(Util.filter(notDefaultObjects, objectFilter)));
-
             /**
              * 5.	На массиве разных объектов, реализующих интерфейс Detector с методом detect, возвращает Boolean,
              * оставить только те объекты, для которых detect возвращает true
              */
-            Filter<Detector> detectorFilter = Detector::detect;
-            Detector[] detectors = new Detector[]{new Flower("green"), new Flower("blue"), new Flower("yellow"), new Bug(6), new Bug(8)};
+            Filter<Detector> detectorFilter = x -> x.detect();
+            Detector[] detectors = new Detector[]{new Flower("green"), new Flower("blue"),
+                    new Flower("yellow"), new Bug(6), new Bug(8)};
             System.out.println(Arrays.toString(Util.filter(detectors, detectorFilter)));
-        } catch (Exception e){
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
