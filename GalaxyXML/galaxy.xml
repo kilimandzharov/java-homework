@@ -1,0 +1,15 @@
+<Galaxy>
+    <Name>GalaxyOne</Name>
+    <Planets>
+        <Planet>
+            <Name>Hi</Name>
+            <Radius>11213</Radius>
+            <Period>1001243</Period>
+        </Planet>
+        <Planet>
+            <Name>Qwerer</Name>
+            <Radius>125312</Radius>
+            <Period>100023</Period>
+        </Planet>
+    </Planets>
+</Galaxy>
