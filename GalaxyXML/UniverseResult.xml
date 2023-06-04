@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Planets>
+    <EqualGroop number="1" name="Qwerer">
+        <Planet>
+            <Name>Qwerer</Name>
+            <Diameter>12500</Diameter>
+            <ForHuman>true</ForHuman>
+            <PercentAreaForLife>11</PercentAreaForLife>
+            <PercentWater>16</PercentWater>
+        </Planet>
+
+        <Planet>
+            <Name>Qwerer</Name>
+            <Diameter>12500</Diameter>
+            <ForHuman>true</ForHuman>
+            <PercentAreaForLife>11</PercentAreaForLife>
+            <PercentWater>16</PercentWater>
+        </Planet>
+
+        <Planet>
+            <Name>Qwerer</Name>
+            <Diameter>12500</Diameter>
+            <ForHuman>true</ForHuman>
+            <PercentAreaForLife>11</PercentAreaForLife>
+            <PercentWater>16</PercentWater>
+        </Planet>
+    </EqualGroop>
+
+    <EqualGroop number="2" name="Yogasana Vijnana: the Science of Yoga">
+        <Planet>
+            <Name>Yogasana Vijnana: the Science of Yoga</Name>
+            <Diameter>12500</Diameter>
+            <ForHuman>false</ForHuman>
+            <PercentAreaForLife>25</PercentAreaForLife>
+            <PercentWater>11</PercentWater>
+        </Planet>
+
+        <Planet>
+            <Name>Yogasana Vijnana: the Science of Yoga</Name>
+            <Diameter>12500</Diameter>
+            <ForHuman>false</ForHuman>
+            <PercentAreaForLife>25</PercentAreaForLife>
+            <PercentWater>11</PercentWater>
+        </Planet>
+	</EqualGroop>
+	
+	<EqualGroop number="3" name="gfdsdgmm">
+        <Planet>
+			<Name>gfdsdgmm</Name>
+			<Diameter>12500</Diameter>
+			<ForHuman>true</ForHuman>
+			<PercentAreaForLife>11</PercentAreaForLife>
+			<PercentWater>16</PercentWater>
+		</Planet>
+    </EqualGroop>
+	
+	
+</Planets>
