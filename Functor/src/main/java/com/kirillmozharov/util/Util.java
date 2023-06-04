@@ -13,7 +13,9 @@ public class Util {
                 count++;
             }
         }
+
         T[] result = (T[]) Array.newInstance(arr.getClass().getComponentType(), count);
+
         int index = 0;
         for (T t : arr) {
             if (tFilter.apply(t)) {
@@ -25,16 +27,18 @@ public class Util {
 
     public static <T> T[] filter(T[] arr, Function<T, Boolean> function) {
         int count = 0;
-        for (T t : arr) {
-            if (function.apply(t)) {
+        for (T item : arr) {
+            if (function.apply(item)) {
                 count++;
             }
         }
+
         T[] result = (T[]) Array.newInstance(arr.getClass(), count);
+
         int index = 0;
-        for (T t : arr) {
-            if (function.apply(t)) {
-                result[index++] = t;
+        for (T item : arr) {
+            if (function.apply(item)) {
+                result[index++] = item;
             }
         }
         return result;

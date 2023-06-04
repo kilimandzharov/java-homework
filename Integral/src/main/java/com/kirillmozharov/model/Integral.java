@@ -22,7 +22,7 @@ public class Integral {
         double resultN = integralRectangle(function, a, b, tempN);
         double result2N = integralRectangle(function, a, b, 2 * tempN);
         while (Math.abs(result2N - resultN) / 3 > EPS) {
-            tempN = 2 * tempN;
+            tempN *= 2;
             resultN = integralRectangle(function, a, b, tempN);
             result2N = integralRectangle(function, a, b, 2 * tempN);
         }
