@@ -36,7 +36,8 @@ public class Util {
      * @throws ParserConfigurationException
      * @throws TransformerException
      */
-    public static void transorm(String from, String to) throws IOException, SAXException, ParserConfigurationException, TransformerException {
+    public static void transorm(String from, String to) throws IOException, SAXException,
+            ParserConfigurationException, TransformerException {
         HashMap<String, ArrayList<Element>> grouped = new HashMap<>();
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -62,7 +63,7 @@ public class Util {
             entryGroup.setAttribute("name", groupName);
             entryGroup.setAttribute("number", Integer.toString(counter++));
             for (Element element : stringArrayListEntry.getValue()) {
-                Element addition = (Element) document.importNode(element, true);
+                Element addition = (Element) newDocument.importNode(element, true);
                 entryGroup.appendChild(addition);
             }
             planets.appendChild(entryGroup);

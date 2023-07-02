@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Казаков Александр.
+ */
 public class Program {
     public static void main(String[] args) {
         try {
