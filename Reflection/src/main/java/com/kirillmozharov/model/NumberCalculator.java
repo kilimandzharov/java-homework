@@ -49,7 +49,7 @@ public abstract class NumberCalculator {
      * @param b
      * @return
      */
-    public abstract int operation(int a, int b);
+    protected abstract int operation(int a, int b);
 
     /**
      * 4.	Написать метод result, который применяет операцию для всех элементов первого массива

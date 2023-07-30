@@ -9,7 +9,7 @@ public class SumCalculator extends NumberCalculator {
     }
 
     @Override
-    public int operation(int a, int b) {
+    protected int operation(int a, int b) {
         return a + b;
     }
 }

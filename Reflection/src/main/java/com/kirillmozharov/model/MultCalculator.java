@@ -9,7 +9,7 @@ public class MultCalculator extends NumberCalculator {
     }
 
     @Override
-    public int operation(int a, int b) {
+    protected int operation(int a, int b) {
         return a * b;
     }
 }
