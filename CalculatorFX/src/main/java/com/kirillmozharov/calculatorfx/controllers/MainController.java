@@ -11,99 +11,9 @@ import net.objecthunter.exp4j.ExpressionBuilder;
 
 
 public class MainController {
-    @FXML
-    public TextField number_1;
-
-    @FXML
-    public TextField number_2;
-
-    @FXML
-    public Label operator;
 
     @FXML
     public TextField result;
-
-    @FXML
-    public void buttonPlus(ActionEvent actionEvent) {
-        resetResult();
-
-        operator.setText("+");
-
-        try {
-            int num1 = Integer.parseInt(this.number_1.getText());
-            int num2 = Integer.parseInt(this.number_2.getText());
-
-            int res = num1 + num2;
-
-            System.out.println(res);
-
-            result.setText(String.valueOf(res));
-
-            System.out.println(result.getText());
-        } catch (NumberFormatException e) {
-            App.showAlert("Error!", "Incorrect format number", Alert.AlertType.ERROR);
-        }
-    }
-
-    @FXML
-    public void buttonMinus(ActionEvent actionEvent) {
-        resetResult();
-
-        operator.setText("-");
-
-        try {
-            int num1 = Integer.parseInt(this.number_1.getText());
-            int num2 = Integer.parseInt(this.number_2.getText());
-
-            int res = num1 - num2;
-
-            result.setText(String.valueOf(res));
-        } catch (NumberFormatException e) {
-            App.showAlert("Error!", "Incorrect format number", Alert.AlertType.ERROR);
-        }
-    }
-
-    @FXML
-    public void buttonDivide(ActionEvent actionEvent) {
-        resetResult();
-
-        operator.setText("/");
-
-        try {
-            int num1 = Integer.parseInt(this.number_1.getText());
-            int num2 = Integer.parseInt(this.number_2.getText());
-
-            int res = num1 / num2;
-
-            result.setText(String.valueOf(res));
-        } catch (NumberFormatException e) {
-            App.showAlert("Error!", "Incorrect format number", Alert.AlertType.ERROR);
-        }
-    }
-
-    @FXML
-    public void buttonMulti(ActionEvent actionEvent) {
-        resetResult();
-
-        operator.setText("*");
-
-        try {
-            int num1 = Integer.parseInt(this.number_1.getText());
-            int num2 = Integer.parseInt(this.number_2.getText());
-
-            int res = num1 * num2;
-
-            result.setText(String.valueOf(res));
-        } catch (NumberFormatException e) {
-            App.showAlert("Error!", "Incorrect format number", Alert.AlertType.ERROR);
-        }
-    }
-
-    private void resetResult() {
-        if (!result.getText().equals("0")) {
-            result.setText("0");
-        }
-    }
 
     public void buttonDigit(ActionEvent actionEvent) {
         Button button = (Button) actionEvent.getSource();
