@@ -7,9 +7,11 @@ import java.util.Arrays;
 
 public class Program {
     public static void main(String[] args) {
-        NumberCalculator numberCalculator = new SumCalculator(8);
+        NumberCalculator numberCalculator = new SumCalculator(3);
         numberCalculator.fill(2,3,5);
-        System.out.println(numberCalculator.result());
-        System.out.println(Arrays.toString(numberCalculator.getDataA()));
+        System.out.println(numberCalculator.getObject());
+        for (int[] ints : numberCalculator.invokeGetMass()) {
+            System.out.println(Arrays.toString(ints));
+        }
     }
 }

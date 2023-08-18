@@ -1,8 +1,11 @@
 package com.kirillmozharov.model;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public abstract class NumberCalculator {
     private int[] dataA;
@@ -11,7 +14,6 @@ public abstract class NumberCalculator {
 
     public NumberCalculator() {
     }
-
 
     /**
      * 1.	Создать базовый класс NumberCalculator, который имеет поля: массивы целых чисел с названиями
@@ -39,6 +41,9 @@ public abstract class NumberCalculator {
      * @param ints
      */
     public void fill(int... ints) {
+        if (ints.length < this.dataA.length){
+            throw new IllegalArgumentException("Array must be the same size as dataA");
+        }
         this.dataA = Arrays.copyOf(ints, this.dataA.length);
     }
 
@@ -63,66 +68,63 @@ public abstract class NumberCalculator {
      * 5.	Написать метод, который возвращает объект такого же типа, как и объект, для которого будет вызван метод,
      * используя динамическую идентификацию типа через getClass() и getConstructor(), подавая в качестве аргумента конструктора длину массива, увеличенную вдвое
      * @return
-     * @throws NoSuchMethodException
-     * @throws InvocationTargetException
-     * @throws InstantiationException
-     * @throws IllegalAccessException
      */
-    public NumberCalculator getObject() throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        return this.getClass().getConstructor(int.class)
-                .newInstance(this.dataA.length * 2);
+    public NumberCalculator getObject() {
+       try {
+           return this.getClass().getConstructor(int.class)
+                   .newInstance(this.dataA.length * 2);
+       } catch (Exception ignored){
+           return null;
+       }
     }
 
     /**
      * 6.	Написать метод, который будет динамически определять и получать массивы и данные из них, которые
      * сохранены в полях, начинающихся с названия mass
-     * @param name
      * @return
-     * @throws NoSuchFieldException
-     * @throws IllegalAccessException
      */
-    public int[] getMassArray(String name) throws NoSuchFieldException, IllegalAccessException {
-        return (int[]) this.getClass().getField("mass" + name).get(this);
+    public List<int[]> getListArray() {
+        try {
+            List<Field> fields = Arrays.stream(NumberCalculator.class.getDeclaredFields()).filter(field -> field.getName().startsWith("mass")).toList();
+            List<int[]> result = new ArrayList<>();
+            for (Field field : fields) {
+                result.add((int[]) field.get(this));
+            }
+            return result;
+        } catch (Exception e){
+            return null;
+        }
     }
 
     /**
      * 9.	Используя динамическую идентификацию типов,
      * написать метод, который вызывает только геттеры, начинающиеся с названия getMass
-     * @throws InvocationTargetException
-     * @throws IllegalAccessException
      */
-    public void invokeGetMass() throws InvocationTargetException, IllegalAccessException {
-        Method[] methods = this.getClass().getMethods();
-        for (Method method : methods) {
-            if (method.getName().startsWith("getMass")) {
-                method.invoke(this);
+    public List<int[]> invokeGetMass() {
+        try {
+            List<int[]> result = new ArrayList<>();
+            Method[] methods = NumberCalculator.class.getDeclaredMethods();
+            for (Method method : methods) {
+                if (method.getName().startsWith("getMass")) {
+                    result.add((int[]) method.invoke(this));
+                }
             }
+            return result;
+        } catch (Exception ignored){
+            return null;
         }
     }
 
-
     public int[] getDataA() {
         return Arrays.copyOf(dataA, dataA.length);
-    }
-
-    public void setDataA(int[] dataA) {
-        this.dataA = dataA;
     }
 
     public int[] getMassPositive() {
         return Arrays.copyOf(massPositive, massPositive.length);
     }
 
-    public void setMassPositive(int[] massPositive) {
-        this.massPositive = massPositive;
-    }
-
     public int[] getMassNegative() {
         return Arrays.copyOf(massNegative, massNegative.length);
-    }
-
-    public void setMassNegative(int[] massNegative) {
-        this.massNegative = massNegative;
     }
 
     @Override
