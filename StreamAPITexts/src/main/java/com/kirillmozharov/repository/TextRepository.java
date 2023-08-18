@@ -16,8 +16,10 @@ public class TextRepository {
      */
     public TextRepository(String path) throws IOException {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
-            String string = bufferedReader.readLine();
-            strings.add(string);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                strings.add(line);
+            }
         }
     }
 
@@ -33,7 +35,8 @@ public class TextRepository {
      * В списке оставить только латинские буквы и пробелы. Прочие символы удалить
      */
     public TextRepository onlyLatinAndSpaces() {
-        this.strings = this.strings.stream().map(x -> x.replaceAll("[^A-Za-z ]", " ")).toList();
+        this.strings = Arrays.stream(this.strings.stream().map(x -> x.replaceAll("[^A-Za-z ]", ""))
+                .collect(Collectors.joining(" ")).split(" ")).filter(s -> s.length() > 0).toList();
         return this;
     }
 
@@ -65,8 +68,13 @@ public class TextRepository {
      */
     public TextRepository removeUnpopularWords() {
         List<String> less = this.top10AndLess10().get(1).stream().map(Map.Entry::getKey).toList();
-        //TODO переписать
-
+        for (int i = 0; i < this.strings.size(); i++) {
+            for (String unpopular : less) {
+                String currentStr = this.strings.get(i);
+                String correctedString = currentStr.replace(unpopular, "");
+                this.strings.set(i, correctedString);
+            }
+        }
         return this;
     }
 
@@ -79,19 +87,31 @@ public class TextRepository {
     //TODO дописать
     public void save(String path) throws IOException {
         List<String> newStrings = new ArrayList<>();
-        String acc = "";
-        for (String s : this.toString().split(" ")) {
-            if (acc.concat(" ").concat(s).length() > 100) {
+        String acc = String.join(" ", this.strings);
+        while (!acc.equals("")) {
+            if (acc.length() > 100) {
+                if (acc.charAt(99) == ' ') {
+                    newStrings.add(acc.substring(0, 99));
+                    acc = acc.substring(100);
+                } else if (acc.charAt(100) == ' ') {
+                    newStrings.add(acc.substring(0, 100));
+                    acc = acc.substring(101);
+                } else {
+                    String substr = acc.substring(0, 100);
+                    int lastSpace = substr.lastIndexOf(" ");
+                    newStrings.add(substr.substring(0, lastSpace));
+                    acc = acc.substring(lastSpace + 1);
+                }
+            } else if (acc.length() > 0) {
                 newStrings.add(acc);
-                acc = s;
-            } else {
-                acc = acc.concat(" ").concat(s);
+                acc = "";
             }
         }
 
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
             for (String newString : newStrings) {
                 bufferedWriter.write(newString);
+                bufferedWriter.write("\n");
             }
         }
     }
