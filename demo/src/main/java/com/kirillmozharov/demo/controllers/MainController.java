@@ -1,5 +1,6 @@
 package com.kirillmozharov.demo.controllers;
 
+import com.kirillmozharov.demo.App;
 import com.kirillmozharov.demo.model.User;
 import com.kirillmozharov.demo.repository.Repository;
 import javafx.collections.FXCollections;
@@ -26,7 +27,7 @@ public class MainController {
     public void buttonSave(ActionEvent actionEvent) {
         User user = comboBox.getSelectionModel().getSelectedItem();
         if(user == null){
-            this.showSelectUserAlertError();
+            App.showAlert("Ошибка", "Выберите Пользователя", Alert.AlertType.INFORMATION);
             return;
         }
         this.repository.add(user);
@@ -36,7 +37,7 @@ public class MainController {
     public void onButtonDelete(ActionEvent actionEvent) {
         User selectedUser = this.listViewUsers.getSelectionModel().getSelectedItem();
         if(selectedUser == null){
-            this.showSelectUserAlertError();
+            App.showAlert("Ошибка", "Выберите Пользователя", Alert.AlertType.INFORMATION);
             return;
         }
         this.repository.remove(selectedUser);
@@ -46,18 +47,11 @@ public class MainController {
     public void onButtonShow(ActionEvent actionEvent) {
         User selectedUser = this.listViewUsers.getSelectionModel().getSelectedItem();
         if(selectedUser == null){
-            this.showSelectUserAlertError();
+            App.showAlert("Ошибка", "Выберите Пользователя", Alert.AlertType.INFORMATION);
             return;
         }
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Информация о пользователе");
-        alert.setContentText(selectedUser.toString());
-        alert.show();
+        App.showAlert("Информация о пользователе",selectedUser.toString(),Alert.AlertType.INFORMATION);
     }
 
-    private void showSelectUserAlertError(){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Выберите пользователя!");
-            alert.show();
-    }
+
 }
