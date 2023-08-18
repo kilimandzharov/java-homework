@@ -66,15 +66,15 @@ public class TextRepository {
     /**
      * Заменить наименее популярные слова на “PYTHON”
      */
+    //TODO
     public TextRepository removeUnpopularWords() {
         List<String> less = this.top10AndLess10().get(1).stream().map(Map.Entry::getKey).toList();
-        for (int i = 0; i < this.strings.size(); i++) {
-            for (String unpopular : less) {
-                String currentStr = this.strings.get(i);
-                String correctedString = currentStr.replace(unpopular, "");
-                this.strings.set(i, correctedString);
+        this.strings = Arrays.stream(Arrays.stream(String.join("\n",this.strings).split(" ")).map(s -> {
+            if(less.contains(s)){
+                return "PYTHON";
             }
-        }
+            return s;
+        }).collect(Collectors.joining(" ")).split("\n")).toList();
         return this;
     }
 

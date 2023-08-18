@@ -6,7 +6,7 @@ public class Program {
     public static void main(String[] args) {
         try {
             TextRepository textRepository = new TextRepository("wiki.txt");
-            textRepository.remainOnlyFull().onlyLatinAndSpaces().save("some.txt");
+            textRepository.removeUnpopularWords().save("some.txt");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
