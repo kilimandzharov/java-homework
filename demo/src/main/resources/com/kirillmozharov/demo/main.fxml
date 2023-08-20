@@ -6,13 +6,13 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="comboBoxUser" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kirillmozharov.demo.controllers.MainController">
+<AnchorPane fx:id="comboBoxUser" stylesheets="@bootstrap3.css" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kirillmozharov.demo.controllers.MainController">
    <children>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" />
-      <ListView fx:id="listViewUsers" layoutX="28.0" layoutY="149.0" prefHeight="200.0" prefWidth="360.0" />
-      <ComboBox fx:id="comboBox" layoutX="29.0" layoutY="61.0" prefHeight="26.0" prefWidth="464.0" />
-      <Button layoutX="510.0" layoutY="61.0" mnemonicParsing="false" onAction="#buttonSave" text="Выбрать" />
-      <Button layoutX="404.0" layoutY="149.0" mnemonicParsing="false" onAction="#onButtonDelete" text="Удалить" />
-      <Button layoutX="482.0" layoutY="149.0" mnemonicParsing="false" onAction="#onButtonShow" text="Просмотреть" />
+      <ListView styleClass="primary" fx:id="listViewUsers" layoutX="28.0" layoutY="149.0" prefHeight="200.0" prefWidth="360.0" />
+      <ComboBox styleClass="combo-box" fx:id="comboBox" layoutX="29.0" layoutY="61.0" prefHeight="26.0" prefWidth="464.0" />
+      <Button styleClass="primary" layoutX="510.0" layoutY="61.0" mnemonicParsing="false" onAction="#buttonSave" text="Выбрать" />
+      <Button styleClass="danger" layoutX="404.0" layoutY="149.0" mnemonicParsing="false" onAction="#onButtonDelete" text="Удалить" />
+      <Button styleClass="primary" layoutX="482.0" layoutY="149.0" mnemonicParsing="false" onAction="#onButtonShow" text="Просмотреть" />
    </children>
 </AnchorPane>
